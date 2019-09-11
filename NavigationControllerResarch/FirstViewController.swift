@@ -8,10 +8,16 @@
 
 import UIKit
 
-class FirstViewController: UIViewController {
+class FirstViewController: UIViewController, NavigationBarColorable {
+    var navigationBarTintColor: UIColor? {
+        return .red
+    }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationController?.navigationBar.isTranslucent = false
+        navigationController?.navigationBar.backgroundColor = .clear
         
         let barButton = UIBarButtonItem(title: "Push", style: .plain, target: self, action: #selector(self.pushVC))
         navigationItem.rightBarButtonItem = barButton
@@ -32,6 +38,7 @@ class FirstViewController: UIViewController {
         UIView.animate(withDuration: 1, delay: 0, options: [.curveEaseInOut, .autoreverse, .repeat], animations: {
             someView.frame.origin.y = someView.frame.origin.y + someView.frame.height / 2
         }, completion: nil)
+        
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -54,12 +61,12 @@ extension FirstViewController: UIGestureRecognizerDelegate {
 
 extension UINavigationController {
     func changeBackgroundColor(color: UIColor) {
-        navigationBar.isTranslucent = false
-        navigationBar.backgroundColor = .clear
-       UIView.transition(with: navigationBar, duration: 0.3, options: .transitionCrossDissolve, animations: {
-            let backgroundImage = UIImage(color: color)
-            self.navigationBar.setBackgroundImage(backgroundImage, for: .default)
-        })
+//        navigationBar.isTranslucent = false
+//        navigationBar.backgroundColor = .clear
+        navigationController?.view.backgroundColor = .clear
+        navigationBar.shadowImage = UIImage()
+        let backgroundImage = UIImage(color: color)
+        self.navigationBar.setBackgroundImage(backgroundImage, for: .default)
         
     }
 }

@@ -8,7 +8,10 @@
 
 import UIKit
 
-class SecondViewController: UIViewController, UIGestureRecognizerDelegate {
+class SecondViewController: UIViewController, UIGestureRecognizerDelegate, NavigationBarColorable {
+    var navigationBarTintColor: UIColor? {
+        return .blue
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,7 +24,7 @@ class SecondViewController: UIViewController, UIGestureRecognizerDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        navigationController?.changeBackgroundColor(color: .blue)
+//        navigationController?.changeBackgroundColor(color: .blue)
         
         let barButton = UIBarButtonItem()
         barButton.title = "Sdfdsf"
@@ -30,7 +33,6 @@ class SecondViewController: UIViewController, UIGestureRecognizerDelegate {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        navigationController?.changeBackgroundColor(color: .red)
     }
     
     @objc func barButton() {
