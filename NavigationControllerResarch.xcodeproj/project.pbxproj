@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E56112342328EB40005DD8C3 /* TKNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56112332328EB40005DD8C3 /* TKNavigationController.swift */; };
 		E567C28F2326355A001DE31B /* NavigationBarColorable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E567C28E2326355A001DE31B /* NavigationBarColorable.swift */; };
 		E5AA35B82320E776002416E0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5AA35B72320E776002416E0 /* AppDelegate.swift */; };
 		E5AA35BA2320E776002416E0 /* FirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5AA35B92320E776002416E0 /* FirstViewController.swift */; };
@@ -16,6 +17,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		E56112332328EB40005DD8C3 /* TKNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKNavigationController.swift; sourceTree = "<group>"; };
 		E567C28E2326355A001DE31B /* NavigationBarColorable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBarColorable.swift; sourceTree = "<group>"; };
 		E5AA35B42320E776002416E0 /* NavigationControllerResarch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NavigationControllerResarch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E5AA35B72320E776002416E0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -60,6 +62,7 @@
 				E5AA35B92320E776002416E0 /* FirstViewController.swift */,
 				E5AA35C92320E793002416E0 /* SecondViewController.swift */,
 				E567C28E2326355A001DE31B /* NavigationBarColorable.swift */,
+				E56112332328EB40005DD8C3 /* TKNavigationController.swift */,
 				E5AA35BE2320E778002416E0 /* Assets.xcassets */,
 				E5AA35C02320E778002416E0 /* LaunchScreen.storyboard */,
 				E5AA35C32320E778002416E0 /* Info.plist */,
@@ -137,6 +140,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E56112342328EB40005DD8C3 /* TKNavigationController.swift in Sources */,
 				E5AA35CA2320E793002416E0 /* SecondViewController.swift in Sources */,
 				E5AA35BA2320E776002416E0 /* FirstViewController.swift in Sources */,
 				E5AA35B82320E776002416E0 /* AppDelegate.swift in Sources */,

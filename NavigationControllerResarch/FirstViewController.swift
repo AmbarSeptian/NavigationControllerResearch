@@ -8,14 +8,16 @@
 
 import UIKit
 
-class FirstViewController: UIViewController, NavigationBarColorable {
+class FirstViewController: UITableViewController, NavigationBarColorable {
     var navigationBarTintColor: UIColor? {
         return .red
     }
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
+        
         navigationController?.navigationBar.isTranslucent = false
         navigationController?.navigationBar.backgroundColor = .clear
         
@@ -50,6 +52,17 @@ class FirstViewController: UIViewController, NavigationBarColorable {
     
     @objc func pushVC() {
         navigationController?.pushViewController(SecondViewController(), animated: true)
+    }
+    
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 20
+    }
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
+        cell.textLabel?.text = "\(indexPath.row)"
+        cell.contentView.backgroundColor = #colorLiteral(red: 0.9764705896, green: 0.850980401, blue: 0.5490196347, alpha: 1)
+        return cell
     }
 }
 

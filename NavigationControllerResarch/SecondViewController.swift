@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SecondViewController: UIViewController, UIGestureRecognizerDelegate, NavigationBarColorable {
+class SecondViewController: UITableViewController, UIGestureRecognizerDelegate, NavigationBarColorable {
     var navigationBarTintColor: UIColor? {
         return .blue
     }
@@ -16,7 +16,7 @@ class SecondViewController: UIViewController, UIGestureRecognizerDelegate, Navig
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = #colorLiteral(red: 0.9764705896, green: 0.850980401, blue: 0.5490196347, alpha: 1)
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
         navigationController?.interactivePopGestureRecognizer?.delegate = self
         
     }
@@ -37,5 +37,16 @@ class SecondViewController: UIViewController, UIGestureRecognizerDelegate, Navig
     
     @objc func barButton() {
         
+    }
+    
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 20
+    }
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
+        cell.textLabel?.text = "\(indexPath.row)"
+        cell.contentView.backgroundColor = #colorLiteral(red: 0.721568644, green: 0.8862745166, blue: 0.5921568871, alpha: 1)
+        return cell
     }
 }

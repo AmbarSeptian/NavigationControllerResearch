@@ -18,7 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let window = UIWindow(frame: UIScreen.main.bounds)
         let vc = FirstViewController()
-        let nav = ColorableNavigationController(rootViewController: vc)
+        let nav = TKNavigationController(rootViewController: vc)
         window.rootViewController = nav
         window.makeKeyAndVisible()
         self.window = window
