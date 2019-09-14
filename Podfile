@@ -6,5 +6,6 @@ target 'NavigationControllerResarch' do
   use_frameworks!
 
   pod 'Texture'
+  pod 'FLEX', '~> 3.0', :configurations => ['Debug']
 
 end

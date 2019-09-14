@@ -34,6 +34,8 @@ class FirstViewController: UITableViewController {
         UIView.animate(withDuration: 1, delay: 0, options: [.curveEaseInOut, .autoreverse, .repeat], animations: {
             someView.frame.origin.y = someView.frame.origin.y + someView.frame.height / 2
         }, completion: nil)
+        
+        tkpNavigationItem.backgroundStyle = .basic
        
     }
     

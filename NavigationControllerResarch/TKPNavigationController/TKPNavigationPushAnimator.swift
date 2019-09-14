@@ -25,7 +25,7 @@ class TKPNavigationPushAnimator: NSObject, UIViewControllerAnimatedTransitioning
         }
         
         // todo change this
-        let nextColor = #colorLiteral(red: 0.9568627477, green: 0.6588235497, blue: 0.5450980663, alpha: 1)
+        let nextColor = toVC.tkpNavigationItem.backgroundStyle.color
         let containerView = transitionContext.containerView
         let shadowMask = UIView(frame: containerView.bounds)
         shadowMask.backgroundColor = .black

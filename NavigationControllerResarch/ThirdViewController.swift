@@ -17,6 +17,8 @@ class ThirdViewController: UIViewController {
         let barButton = UIBarButtonItem(title: "Push", style: .plain, target: self, action: #selector(pushVC))
         navigationItem.rightBarButtonItem = barButton
         
+        tkpNavigationItem.layout()
+        view.backgroundColor = .white
     }
     
 

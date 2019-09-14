@@ -18,6 +18,9 @@ class TKPNavigationController: UINavigationController {
         setViewControllers([rootViewController], animated: false)
     }
 
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -62,24 +65,12 @@ public class TKPNavigationBar: UINavigationBar {
         get { return .blue }
         set {}  
     }
-
-//    public override var items: [UINavigationItem]? {
-//        get { return _items }
-//        set {
-//
-//            let newItems = newValue?.map { item -> BackupTKPNavigationItem in
-//                if let tkpNavigationItem = item as? BackupTKPNavigationItem {
-//                    return tkpNavigationItem
-//                } else {
-//                    let tkpNavigationItem = BackupTKPNavigationItem()
-//                    tkpNavigationItem.title = "AAA"
-//                    return tkpNavigationItem
-//                }
-//            }
-//            _items = newItems
-//            super.setItems(newItems, animated: false)
-//        }
-//    }
+    
+    public override func layoutSubviews() {
+        super.layoutSubviews()
+        guard let topTitleView = topItem?.titleView else { return }
+        topTitleView.frame = CGRect(x: topTitleView.frame.origin.x, y: 0, width: topTitleView.frame.width, height: 100)
+    }
     
     private var _items: [BackupTKPNavigationItem]?
     
@@ -108,13 +99,6 @@ public class TKPNavigationBar: UINavigationBar {
     }
     
     public override func setItems(_ items: [UINavigationItem]?, animated: Bool) {
-        let newItems = items?.compactMap { item -> BackupTKPNavigationItem in
-            let newItem = BackupTKPNavigationItem()
-            newItem.title = item.title
-            newItem.rightBarButtonItems = item.rightBarButtonItems
-            return newItem
-        }
-//        self._items = newItems
         items?.forEach({ item in
              let barButton = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
              item.backBarButtonItem = barButton

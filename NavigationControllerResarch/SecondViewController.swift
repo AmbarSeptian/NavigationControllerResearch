@@ -16,10 +16,13 @@ class SecondViewController: UITableViewController, UIGestureRecognizerDelegate {
         navigationController?.interactivePopGestureRecognizer?.delegate = self
     
         tkpNavigationItem.title = "Second"
+        tkpNavigationItem.subtitle = "Some title here"
         navigationItem.titleView?.layoutIfNeeded()
         
         let barButton = UIBarButtonItem(title: "Push", style: .plain, target: self, action: #selector(self.pushVC))
         navigationItem.rightBarButtonItem = barButton
+        
+        tkpNavigationItem.backgroundStyle = .transparent
     }
     
     
