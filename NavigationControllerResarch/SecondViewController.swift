@@ -8,35 +8,38 @@
 
 import UIKit
 
-class SecondViewController: UITableViewController, UIGestureRecognizerDelegate, NavigationBarColorable {
-    var navigationBarTintColor: UIColor? {
-        return .blue
-    }
-    
+class SecondViewController: UITableViewController, UIGestureRecognizerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
         navigationController?.interactivePopGestureRecognizer?.delegate = self
+    
+        tkpNavigationItem.title = "Second"
+        navigationItem.titleView?.layoutIfNeeded()
         
+        let barButton = UIBarButtonItem(title: "Push", style: .plain, target: self, action: #selector(self.pushVC))
+        navigationItem.rightBarButtonItem = barButton
     }
     
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 //        navigationController?.changeBackgroundColor(color: .blue)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         
-        let barButton = UIBarButtonItem()
-        barButton.title = "Sdfdsf"
-        navigationItem.backBarButtonItem = UIBarButtonItem(title: "sdfsdfsd", style: .done, target: nil, action: nil)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
     }
     
-    @objc func barButton() {
-        
+    @objc func pushVC() {
+        let vc = ThirdViewController()
+        navigationController?.pushViewController(vc, animated: true)
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

@@ -86,14 +86,14 @@ open class ColorableNavigationController: UINavigationController {
     }
 }
 
-
-
-//class RainbowPushAnimator: NSObject, UIViewControllerAnimatedTransitioning {
+//
+//class RainbowPopAnimator: NSObject, UIViewControllerAnimatedTransitioning {
+//    var animating = false
+//    
 //    func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
-//        return 0.3
+//        return 0.2
 //    }
 //    func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
-//
 //        let fromVC = transitionContext.viewController(forKey: UITransitionContextViewControllerKey.from)!
 //        let toVC = transitionContext.viewController(forKey: UITransitionContextViewControllerKey.to)!
 //        
@@ -103,36 +103,33 @@ open class ColorableNavigationController: UINavigationController {
 //        var nextColor:UIColor?
 //        nextColor = fromColorSource?.navigationBarOutColor?()
 //        nextColor = toColorSource?.navigationBarInColor?()
-//
+//        
 //        let containerView = transitionContext.containerView
 //        let shadowMask = UIView(frame: containerView.bounds)
 //        shadowMask.backgroundColor = UIColor.black
-//        shadowMask.alpha = 0
-//        containerView.addSubview(shadowMask)
-//        containerView.addSubview(toVC.view)
+//        shadowMask.alpha = 0.3
 //        
-//        // Layout
-//        let originFromFrame = fromVC.view.frame
 //        let finalToFrame = transitionContext.finalFrame(for: toVC)
-//        toVC.view.frame = finalToFrame.offsetBy(dx: finalToFrame.width, dy: 0)
+//        toVC.view.frame = finalToFrame.offsetBy(dx: -finalToFrame.width/2, dy: 0)
 //        
-//
-//        let duration = transitionDuration(using: transitionContext)
+//        containerView.insertSubview(toVC.view, belowSubview: fromVC.view)
+//        containerView.insertSubview(shadowMask, aboveSubview: toVC.view)
 //        
-//        UIView.animate(withDuration: duration, delay: 0, options: UIView.AnimationOptions(), animations: { () -> Void in
-//            
+//        let duration = self.transitionDuration(using: transitionContext)
+//        
+//        animating = true
+//        UIView.animate(withDuration: duration, delay: 0, options: .curveLinear, animations: { () -> Void in
+//            fromVC.view.frame = fromVC.view.frame.offsetBy(dx: fromVC.view.frame.width, dy: 0)
 //            toVC.view.frame = finalToFrame
-//            let finalFromframe = originFromFrame.offsetBy(dx: -originFromFrame.width / 2, dy: 0)
-//            fromVC.view.frame = finalFromframe
-//            shadowMask.alpha = 0.3
-//
+//            shadowMask.alpha = 0
 //            if let navigationColor = nextColor {
 //                fromVC.navigationController?.navigationBar.rb.backgroundColor = navigationColor
 //            }
 //            
 //            }) { (finished) -> Void in
-//                fromVC.view.frame = originFromFrame
+//                self.animating = false
 //                shadowMask.removeFromSuperview()
+//                
 //                transitionContext.completeTransition(!transitionContext.transitionWasCancelled)
 //        }
 //    }

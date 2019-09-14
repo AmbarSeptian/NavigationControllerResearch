@@ -8,29 +8,23 @@
 
 import UIKit
 
-class FirstViewController: UITableViewController, NavigationBarColorable {
-    var navigationBarTintColor: UIColor? {
-        return .red
-    }
-    
+class FirstViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
         
-        navigationController?.navigationBar.isTranslucent = false
-        navigationController?.navigationBar.backgroundColor = .clear
+//        navigationItem.title = "AAAAVVVV"
+        
+//        navigationController?.navigationBar.isTranslucent = false
+//        navigationController?.navigationBar.backgroundColor = .clear
         
         let barButton = UIBarButtonItem(title: "Push", style: .plain, target: self, action: #selector(self.pushVC))
         navigationItem.rightBarButtonItem = barButton
         navigationController?.interactivePopGestureRecognizer?.delegate = self
         
-        let barButton2 = UIBarButtonItem()
-        barButton2.title = "Sdfdsf"
-        navigationItem.backBarButtonItem = UIBarButtonItem(title: "sdfsdfsd", style: .done, target: nil, action: nil)
-        
+    
         view.backgroundColor = #colorLiteral(red: 0.9764705896, green: 0.850980401, blue: 0.5490196347, alpha: 1)
-        
         
         let someView = UIView()
         someView.backgroundColor = #colorLiteral(red: 0.4745098054, green: 0.8392156959, blue: 0.9764705896, alpha: 1)
@@ -40,18 +34,25 @@ class FirstViewController: UITableViewController, NavigationBarColorable {
         UIView.animate(withDuration: 1, delay: 0, options: [.curveEaseInOut, .autoreverse, .repeat], animations: {
             someView.frame.origin.y = someView.frame.origin.y + someView.frame.height / 2
         }, completion: nil)
-        
-    }
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-//        navigationController?.changeBackgroundColor(color: .red)
+       
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        tkpNavigationItem.title = "First"
+        tkpNavigationItem.layout()
+    }
+    
+
+    override func motionEnded(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
+        guard motion == .motionShake else { return }
+        pushVC()
+    }
     
     
     @objc func pushVC() {
-        navigationController?.pushViewController(SecondViewController(), animated: true)
+        let vc = ThirdViewController()
+        navigationController?.pushViewController(vc, animated: true)
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -76,10 +77,10 @@ extension UINavigationController {
     func changeBackgroundColor(color: UIColor) {
 //        navigationBar.isTranslucent = false
 //        navigationBar.backgroundColor = .clear
-        navigationController?.view.backgroundColor = .clear
-        navigationBar.shadowImage = UIImage()
-        let backgroundImage = UIImage(color: color)
-        self.navigationBar.setBackgroundImage(backgroundImage, for: .default)
+//        navigationController?.view.backgroundColor = .clear
+//        navigationBar.shadowImage = UIImage()
+//        let backgroundImage = UIImage(color: color)
+//        self.navigationBar.setBackgroundImage(backgroundImage, for: .default)
         
     }
 }
@@ -99,13 +100,3 @@ extension UIImage {
     }
 }
 
-
-protocol ASDF {
-    var randomValue: String { get }
-}
-
-extension UIViewController: ASDF {
-    var randomValue: String {
-        return "dsfsdf"
-    }
-}

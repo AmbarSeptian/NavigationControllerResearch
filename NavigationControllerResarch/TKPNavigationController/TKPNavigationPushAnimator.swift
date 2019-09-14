@@ -1,5 +1,5 @@
 //
-//  TKNavigationController.swift
+//  TKPNavigationPushAnimator.swift
 //  NavigationControllerResarch
 //
 //  Created by Ambar Septian on 11/09/19.
@@ -8,46 +8,9 @@
 
 import UIKit
 
-class TKNavigationController: UINavigationController {
-    
-    private let pushAnimator = TKPNavigationPushAnimator()
-    
-    override init(rootViewController: UIViewController) {
-        super.init(rootViewController: rootViewController)
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        delegate = self
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-}
-
-extension TKNavigationController: UINavigationControllerDelegate  {
-    func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationController.Operation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        switch operation {
-        case .push:
-            return pushAnimator
-        case .pop, .none:
-            fallthrough
-        @unknown default:
-            return nil
-        }
-        
-    }
-}
-
-class TKNavigationBar: UINavigationBar {
-    
-}
-
-
 class TKPNavigationPushAnimator: NSObject, UIViewControllerAnimatedTransitioning {
     func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
-        return 0.3
+        return 0.35
     }
     
     func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
@@ -81,7 +44,7 @@ class TKPNavigationPushAnimator: NSObject, UIViewControllerAnimatedTransitioning
             toVC.view.frame = finalFrame
             let finalFromFrame = originFrame.offsetBy(dx: -originFrame.width, dy: 0)
             fromVC.view.frame = finalFromFrame
-            shadowMask.alpha = 0.3
+            shadowMask.alpha = 0.1
             fromVC.navigationController?.navigationBar.barTintColor = nextColor
             
         }) { _ in
