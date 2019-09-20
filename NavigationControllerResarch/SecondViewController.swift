@@ -23,6 +23,7 @@ class SecondViewController: UITableViewController, UIGestureRecognizerDelegate {
         navigationItem.rightBarButtonItem = barButton
         
         tkpNavigationItem.backgroundStyle = .transparent
+        view.backgroundColor = #colorLiteral(red: 0.9764705896, green: 0.850980401, blue: 0.5490196347, alpha: 1)
     }
     
     
@@ -42,6 +43,12 @@ class SecondViewController: UITableViewController, UIGestureRecognizerDelegate {
     
     @objc func pushVC() {
         let vc = ThirdViewController()
+        vc.someClosure = {
+            print("#1")
+        }
+        vc.someClosure = {
+            print("#2")
+        }
         navigationController?.pushViewController(vc, animated: true)
     }
     
@@ -52,7 +59,7 @@ class SecondViewController: UITableViewController, UIGestureRecognizerDelegate {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
         cell.textLabel?.text = "\(indexPath.row)"
-        cell.contentView.backgroundColor = #colorLiteral(red: 0.721568644, green: 0.8862745166, blue: 0.5921568871, alpha: 1)
+        cell.contentView.backgroundColor = #colorLiteral(red: 0.9764705896, green: 0.850980401, blue: 0.5490196347, alpha: 1)
         return cell
     }
 }

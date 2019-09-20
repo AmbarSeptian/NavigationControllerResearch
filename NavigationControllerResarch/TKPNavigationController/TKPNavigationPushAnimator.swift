@@ -20,12 +20,16 @@ class TKPNavigationPushAnimator: NSObject, UIViewControllerAnimatedTransitioning
         }
         
         guard let toVC = transitionContext.viewController(forKey: .to) else {
-                   assertionFailure("Next ViewController while transitioning not found")
+            assertionFailure("Next ViewController while transitioning not found")
             return
         }
         
-        // todo change this
-        let nextColor = toVC.tkpNavigationItem.backgroundStyle.color
+        guard let tkpNavigationBar = fromVC.navigationController?.navigationBar as? TKPNavigationBar else {
+            assertionFailure("Previous Controller Navbar should be TKPNavigationBar")
+            return
+        }
+        
+        let nextStyle = toVC.tkpNavigationItem.backgroundStyle
         let containerView = transitionContext.containerView
         let shadowMask = UIView(frame: containerView.bounds)
         shadowMask.backgroundColor = .black
@@ -45,7 +49,7 @@ class TKPNavigationPushAnimator: NSObject, UIViewControllerAnimatedTransitioning
             let finalFromFrame = originFrame.offsetBy(dx: -originFrame.width, dy: 0)
             fromVC.view.frame = finalFromFrame
             shadowMask.alpha = 0.1
-            fromVC.navigationController?.navigationBar.barTintColor = nextColor
+            tkpNavigationBar.backgroundStyle = nextStyle
             
         }) { _ in
             fromVC.view.frame = originFrame

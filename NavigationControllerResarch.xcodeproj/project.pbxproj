@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -11,6 +11,8 @@
 		E55FC8B5232D317100E0C256 /* TKPNavigationItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = E55FC8B4232D317100E0C256 /* TKPNavigationItem.swift */; };
 		E56112342328EB40005DD8C3 /* TKNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56112332328EB40005DD8C3 /* TKNavigationController.swift */; };
 		E567C28F2326355A001DE31B /* NavigationBarColorable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E567C28E2326355A001DE31B /* NavigationBarColorable.swift */; };
+		E56DEFA9232F77EE001AEC7A /* TKPNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56DEFA8232F77EE001AEC7A /* TKPNavigationBar.swift */; };
+		E56DEFAB232F93A2001AEC7A /* PresenterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56DEFAA232F93A2001AEC7A /* PresenterViewController.swift */; };
 		E5827067232C112500D5BE73 /* ThirdViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5827066232C112500D5BE73 /* ThirdViewController.swift */; };
 		E5AA35B82320E776002416E0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5AA35B72320E776002416E0 /* AppDelegate.swift */; };
 		E5AA35BA2320E776002416E0 /* FirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5AA35B92320E776002416E0 /* FirstViewController.swift */; };
@@ -28,6 +30,8 @@
 		E55FC8B4232D317100E0C256 /* TKPNavigationItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKPNavigationItem.swift; sourceTree = "<group>"; };
 		E56112332328EB40005DD8C3 /* TKNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKNavigationController.swift; sourceTree = "<group>"; };
 		E567C28E2326355A001DE31B /* NavigationBarColorable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBarColorable.swift; sourceTree = "<group>"; };
+		E56DEFA8232F77EE001AEC7A /* TKPNavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKPNavigationBar.swift; sourceTree = "<group>"; };
+		E56DEFAA232F93A2001AEC7A /* PresenterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresenterViewController.swift; sourceTree = "<group>"; };
 		E5827066232C112500D5BE73 /* ThirdViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThirdViewController.swift; sourceTree = "<group>"; };
 		E5AA35B42320E776002416E0 /* NavigationControllerResarch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NavigationControllerResarch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E5AA35B72320E776002416E0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -66,7 +70,6 @@
 				3BEFAD2E40E309862108709D /* Pods-NavigationControllerResarch.debug.xcconfig */,
 				5235AED2BC8AB2AE07C370ED /* Pods-NavigationControllerResarch.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -95,6 +98,7 @@
 				E5AA35B92320E776002416E0 /* FirstViewController.swift */,
 				E5AA35C92320E793002416E0 /* SecondViewController.swift */,
 				E5827066232C112500D5BE73 /* ThirdViewController.swift */,
+				E56DEFAA232F93A2001AEC7A /* PresenterViewController.swift */,
 				E567C28E2326355A001DE31B /* NavigationBarColorable.swift */,
 				E5DA11C8232920670082BF64 /* TKPNavigationController */,
 				E5AA35BE2320E778002416E0 /* Assets.xcassets */,
@@ -109,6 +113,7 @@
 			children = (
 				E56112332328EB40005DD8C3 /* TKNavigationController.swift */,
 				E55FC8B4232D317100E0C256 /* TKPNavigationItem.swift */,
+				E56DEFA8232F77EE001AEC7A /* TKPNavigationBar.swift */,
 				E5DA11C92329208B0082BF64 /* TKPNavigationPushAnimator.swift */,
 				E5DA11CB232920A30082BF64 /* TKPNavigationPopAnimator.swift */,
 			);
@@ -229,11 +234,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E56DEFAB232F93A2001AEC7A /* PresenterViewController.swift in Sources */,
 				E5DA11CA2329208B0082BF64 /* TKPNavigationPushAnimator.swift in Sources */,
 				E55FC8B5232D317100E0C256 /* TKPNavigationItem.swift in Sources */,
 				E56112342328EB40005DD8C3 /* TKNavigationController.swift in Sources */,
 				E5AA35CA2320E793002416E0 /* SecondViewController.swift in Sources */,
 				E5DA11CC232920A30082BF64 /* TKPNavigationPopAnimator.swift in Sources */,
+				E56DEFA9232F77EE001AEC7A /* TKPNavigationBar.swift in Sources */,
 				E5AA35BA2320E776002416E0 /* FirstViewController.swift in Sources */,
 				E5AA35B82320E776002416E0 /* AppDelegate.swift in Sources */,
 				E5827067232C112500D5BE73 /* ThirdViewController.swift in Sources */,

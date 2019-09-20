@@ -22,7 +22,6 @@ class FirstViewController: UITableViewController {
         let barButton = UIBarButtonItem(title: "Push", style: .plain, target: self, action: #selector(self.pushVC))
         navigationItem.rightBarButtonItem = barButton
         navigationController?.interactivePopGestureRecognizer?.delegate = self
-        
     
         view.backgroundColor = #colorLiteral(red: 0.9764705896, green: 0.850980401, blue: 0.5490196347, alpha: 1)
         
@@ -42,7 +41,7 @@ class FirstViewController: UITableViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         tkpNavigationItem.title = "First"
-        tkpNavigationItem.layout()
+//        tkpNavigationItem.layout()
     }
     
 

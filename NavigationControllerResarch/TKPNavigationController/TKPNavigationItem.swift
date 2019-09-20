@@ -9,8 +9,8 @@
 import AsyncDisplayKit
 
 public class TKPNavigationItem: NSObject {
-    private let navigationItem: UINavigationItem
-    private lazy var headerNode: TKPNavigationHeaderNode = {
+    private weak var navigationItem: UINavigationItem?
+    internal lazy var headerNode: TKPNavigationHeaderNode = {
       return TKPNavigationHeaderNode()
     }()
     
@@ -21,41 +21,49 @@ public class TKPNavigationItem: NSObject {
         internal var color: UIColor {
             switch self {
             case .basic:
-                return #colorLiteral(red: 0.2588235438, green: 0.7568627596, blue: 0.9686274529, alpha: 1)
+                return #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
             case .transparent:
-                return #colorLiteral(red: 0.9607843161, green: 0.7058823705, blue: 0.200000003, alpha: 1)
+                return .clear
             }
         }
     }
     
-    public var backgroundStyle: BackgroundStyle = .basic
-    
-    init(_ navigationItem: UINavigationItem) {
-        self.navigationItem = navigationItem
-        super.init()
-        self.configure()
+    public var backgroundStyle: BackgroundStyle = .basic {
+        didSet {
+            didBackgroundStyleChanged?(backgroundStyle)
+        }
     }
     
-    internal func configure() {
+    internal var didBackgroundStyleChanged: ((_ backgroundStyle: BackgroundStyle) -> ())?
+    
+    internal init(_ navigationItem: UINavigationItem?) {
+        self.navigationItem = navigationItem
+        super.init()
+        self.commonInit()
+    }
+    
+    internal func commonInit() {
         configureBackButton()
         configreTitleView()
     }
     
     private func configureBackButton() {
-        let barButton = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
-        navigationItem.backBarButtonItem = barButton
+        let emptyButton = UIView()
+        emptyButton.frame = CGRect.zero
+        let barButton = UIBarButtonItem(customView: emptyButton)
+        navigationItem?.backBarButtonItem = barButton
     }
     
     private func configreTitleView() {
-        navigationItem.titleView = headerNode.view
+        navigationItem?.titleView = headerNode.view
     }
     
     public var hidesBackButton: Bool {
         get {
-            navigationItem.hidesBackButton
+            navigationItem?.hidesBackButton ?? false
         }
         set {
-            navigationItem.hidesBackButton = newValue
+            navigationItem?.hidesBackButton = newValue
         }
     }
     
@@ -70,22 +78,21 @@ public class TKPNavigationItem: NSObject {
     }
     
     public var subtitle: String? {
-           get {
-               headerNode.subtitle
-           }
-           
-           set {
-               headerNode.subtitle = newValue
-           }
+       get {
+           headerNode.subtitle
        }
+       
+       set {
+           headerNode.subtitle = newValue
+       }
+    }
     
-    public func layout() {
-        headerNode.frame = CGRect(x: 0, y: 0, width: 100, height: 44)
+    
+    internal func layout(_ height: CGFloat) {
+        headerNode.setNeedsLayout()
         headerNode.layoutIfNeeded()
-        
     }
 }
-
 
 
 class TKPNavigationHeaderNode: ASDisplayNode {

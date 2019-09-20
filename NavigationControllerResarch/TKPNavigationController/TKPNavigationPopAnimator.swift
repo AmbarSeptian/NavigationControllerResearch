@@ -24,7 +24,12 @@ class TKPNavigationPopAnimator: NSObject, UIViewControllerAnimatedTransitioning 
             return
         }
         
-        let toColor = toVC.tkpNavigationItem.backgroundStyle.color
+        guard let tkpNavigationBar = fromVC.navigationController?.navigationBar as? TKPNavigationBar else {
+                  assertionFailure("Previous Controller Navbar should be TKPNavigationBar")
+                  return
+              }
+        
+        let nextStyle = toVC.tkpNavigationItem.backgroundStyle
     
         let containerView = transitionContext.containerView
         let shadowMask = UIView(frame: containerView.bounds)
@@ -37,14 +42,13 @@ class TKPNavigationPopAnimator: NSObject, UIViewControllerAnimatedTransitioning 
         containerView.insertSubview(toVC.view, belowSubview: fromVC.view)
         containerView.insertSubview(shadowMask, aboveSubview: toVC.view)
         
-        let fromTitleFrame = fromVC.navigationItem.titleView?.frame
-        
+    
         let duration = transitionDuration(using: transitionContext)
         UIView.animate(withDuration: duration, delay: 0, options: .curveEaseOut, animations: {
             fromVC.view.frame = fromVC.view.frame.offsetBy(dx: fromVC.view.frame.width, dy: 0)
             toVC.view.frame = finalFrame
             shadowMask.alpha = 0
-            fromVC.navigationController?.navigationBar.barTintColor = toColor
+            tkpNavigationBar.backgroundStyle = nextStyle
         }) { _ in
             shadowMask.removeFromSuperview()
             let completeTransition = !(transitionContext.transitionWasCancelled)

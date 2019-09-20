@@ -13,6 +13,14 @@ class TKPNavigationController: UINavigationController {
     private let pushAnimator = TKPNavigationPushAnimator()
     private let popAnimator = TKPNavigationPopAnimator()
     
+    private var tkpNavigationBar: TKPNavigationBar {
+        guard let navigationBar = navigationBar as? TKPNavigationBar else {
+            fatalError("NavigationBar class should be `TKPNavigationBar`")
+        }
+        
+        return navigationBar
+    }
+    
     override init(rootViewController: UIViewController) {
         super.init(navigationBarClass: TKPNavigationBar.self, toolbarClass: nil)
         setViewControllers([rootViewController], animated: false)
@@ -25,24 +33,21 @@ class TKPNavigationController: UINavigationController {
     override func viewDidLoad() {
         super.viewDidLoad()
         delegate = self
+        
+        prepare()
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-}
-
-internal class BackupTKPNavigationItem: UINavigationItem {
-    init() {
-        super.init(title: "sdfsdf")
-        title = "asdfsdf"
+    private func prepare() {
+        guard let initialBackgroundStyle = topViewController?.tkpNavigationItem.backgroundStyle else { return }
+        tkpNavigationBar.backgroundStyle = initialBackgroundStyle
     }
     
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
 }
+
 
 extension TKPNavigationController: UINavigationControllerDelegate  {
     func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationController.Operation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
@@ -58,60 +63,9 @@ extension TKPNavigationController: UINavigationControllerDelegate  {
     }
 }
 
-public class TKPNavigationBar: UINavigationBar {
-    weak var navigationController: UINavigationController?
-    
-    public override var backgroundColor: UIColor? {
-        get { return .blue }
-        set {}  
-    }
-    
-    public override func layoutSubviews() {
-        super.layoutSubviews()
-        guard let topTitleView = topItem?.titleView else { return }
-        topTitleView.frame = CGRect(x: topTitleView.frame.origin.x, y: 0, width: topTitleView.frame.width, height: 100)
-    }
-    
-    private var _items: [BackupTKPNavigationItem]?
-    
-    public override init(frame: CGRect) {
-        super.init(frame: frame)
-        barTintColor = .blue
-        commonInit()
-    }
-    
-    private func commonInit() {
-        configureBackButtonImage()
-    }
-    
-    private func configureBackButtonImage() {
-        let backImage = UIImage(named: "icon-back")
-        backIndicatorImage = backImage
-        backIndicatorTransitionMaskImage = backImage
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    public override func pushItem(_ item: UINavigationItem, animated: Bool) {
-        super.pushItem(item, animated: true)
-    }
-    
-    public override func setItems(_ items: [UINavigationItem]?, animated: Bool) {
-        items?.forEach({ item in
-             let barButton = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
-             item.backBarButtonItem = barButton
-        })
-        super.setItems(items, animated: animated)
-    }
-    
-}
 
 extension TKPNavigationController: UINavigationBarDelegate {
     public func navigationBar(_ navigationBar: UINavigationBar, didPush item: UINavigationItem) {
-        let barButton = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
-        item.backBarButtonItem = barButton
 
     }
     
@@ -120,40 +74,27 @@ extension TKPNavigationController: UINavigationBarDelegate {
     }
 }
 
-
-
-
-extension UINavigationController {
+extension UINavigationItem {
     private struct TKPAssociatedKey {
-        static var navBar = "NavBarAssociatedKey"
-    }
-    
-    public var tkpNavigation: TKPNavigationBar {
-        if let navbar = objc_getAssociatedObject(self, &TKPAssociatedKey.navBar) as? TKPNavigationBar {
-            return navbar
-        }
-        let navbar = TKPNavigationBar()
-        objc_setAssociatedObject(self, &TKPAssociatedKey.navBar, navbar, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
-        return navbar
-    }
-    
+          static var navigationItem = "NavigationItemAssociatedKey"
+      }
+   
+   public var tkpNavigationItem: TKPNavigationItem {
+       if let navbarItem = objc_getAssociatedObject(self, &TKPAssociatedKey.navigationItem) as? TKPNavigationItem {
+           return navbarItem
+       }
+       let navbarItem = TKPNavigationItem(self)
+       objc_setAssociatedObject(self,
+                                &TKPAssociatedKey.navigationItem,
+                                navbarItem,
+                                .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+       return navbarItem
+   }
 }
 
 
 extension UIViewController {
-    private struct TKPAssociatedKey {
-           static var navBar = "NavBarAssociatedKey"
-       }
-    
     public var tkpNavigationItem: TKPNavigationItem {
-        if let navbarItem = objc_getAssociatedObject(self, &TKPAssociatedKey.navBar) as? TKPNavigationItem {
-            return navbarItem
-        }
-        let navbarItem = TKPNavigationItem(navigationItem)
-        objc_setAssociatedObject(self,
-                                 &TKPAssociatedKey.navBar,
-                                 navbarItem,
-                                 .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
-        return navbarItem
+        navigationItem.tkpNavigationItem
     }
 }
