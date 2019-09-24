@@ -62,4 +62,8 @@ class SecondViewController: UITableViewController, UIGestureRecognizerDelegate {
         cell.contentView.backgroundColor = #colorLiteral(red: 0.9764705896, green: 0.850980401, blue: 0.5490196347, alpha: 1)
         return cell
     }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        navigationController?.popToRootViewController(animated: true)
+    }
 }

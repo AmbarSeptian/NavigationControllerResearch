@@ -26,8 +26,8 @@ internal class TKPNavigationPopAnimator: NSObject, UIViewControllerAnimatedTrans
             return
         }
         
-        guard let tkpNavigationBar = fromVC.navigationController?.navigationBar as? TKPNavigationBar else {
-                  assertionFailure("Previous Controller Navbar should be TKPNavigationBar")
+        guard let tkpNavigationBar = toVC.navigationController?.navigationBar as? TKPNavigationBar else {
+                  assertionFailure("Next Controller Navbar should be TKPNavigationBar")
                   return
               }
         
