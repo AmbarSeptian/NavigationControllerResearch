@@ -8,12 +8,12 @@
 
 import UIKit
 
-class TKPNavigationPushAnimator: NSObject, UIViewControllerAnimatedTransitioning {
-    func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
+internal class TKPNavigationPushAnimator: NSObject, UIViewControllerAnimatedTransitioning {
+    internal func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
         return 0.35
     }
     
-    func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
+    internal func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
         guard let fromVC = transitionContext.viewController(forKey: .from) else {
             assertionFailure("Previous ViewController while transitioning not found")
             return

@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		694A5BB54DFDB5C8142195BF /* Pods_NavigationControllerResarch.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C0A8E05F8000D8AF83ADDB52 /* Pods_NavigationControllerResarch.framework */; };
+		E55904C22339D5BA00621148 /* TKPNavigationInteractiveTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = E55904C12339D5BA00621148 /* TKPNavigationInteractiveTransition.swift */; };
 		E55FC8B5232D317100E0C256 /* TKPNavigationItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = E55FC8B4232D317100E0C256 /* TKPNavigationItem.swift */; };
 		E56112342328EB40005DD8C3 /* TKNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56112332328EB40005DD8C3 /* TKNavigationController.swift */; };
 		E567C28F2326355A001DE31B /* NavigationBarColorable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E567C28E2326355A001DE31B /* NavigationBarColorable.swift */; };
@@ -27,6 +28,7 @@
 		3BEFAD2E40E309862108709D /* Pods-NavigationControllerResarch.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NavigationControllerResarch.debug.xcconfig"; path = "Target Support Files/Pods-NavigationControllerResarch/Pods-NavigationControllerResarch.debug.xcconfig"; sourceTree = "<group>"; };
 		5235AED2BC8AB2AE07C370ED /* Pods-NavigationControllerResarch.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NavigationControllerResarch.release.xcconfig"; path = "Target Support Files/Pods-NavigationControllerResarch/Pods-NavigationControllerResarch.release.xcconfig"; sourceTree = "<group>"; };
 		C0A8E05F8000D8AF83ADDB52 /* Pods_NavigationControllerResarch.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NavigationControllerResarch.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E55904C12339D5BA00621148 /* TKPNavigationInteractiveTransition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKPNavigationInteractiveTransition.swift; sourceTree = "<group>"; };
 		E55FC8B4232D317100E0C256 /* TKPNavigationItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKPNavigationItem.swift; sourceTree = "<group>"; };
 		E56112332328EB40005DD8C3 /* TKNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKNavigationController.swift; sourceTree = "<group>"; };
 		E567C28E2326355A001DE31B /* NavigationBarColorable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBarColorable.swift; sourceTree = "<group>"; };
@@ -116,6 +118,7 @@
 				E56DEFA8232F77EE001AEC7A /* TKPNavigationBar.swift */,
 				E5DA11C92329208B0082BF64 /* TKPNavigationPushAnimator.swift */,
 				E5DA11CB232920A30082BF64 /* TKPNavigationPopAnimator.swift */,
+				E55904C12339D5BA00621148 /* TKPNavigationInteractiveTransition.swift */,
 			);
 			path = TKPNavigationController;
 			sourceTree = "<group>";
@@ -132,6 +135,7 @@
 				E5AA35B12320E776002416E0 /* Frameworks */,
 				E5AA35B22320E776002416E0 /* Resources */,
 				F162B4C419D35C47D8D46EC4 /* [CP] Embed Pods Frameworks */,
+				E564ED532339199900E3221F /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -210,6 +214,24 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		E564ED532339199900E3221F /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "
+";
+		};
 		F162B4C419D35C47D8D46EC4 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -234,6 +256,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E55904C22339D5BA00621148 /* TKPNavigationInteractiveTransition.swift in Sources */,
 				E56DEFAB232F93A2001AEC7A /* PresenterViewController.swift in Sources */,
 				E5DA11CA2329208B0082BF64 /* TKPNavigationPushAnimator.swift in Sources */,
 				E55FC8B5232D317100E0C256 /* TKPNavigationItem.swift in Sources */,
@@ -384,13 +407,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 79D36Y5DN3;
 				INFOPLIST_FILE = NavigationControllerResarch/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.tokopedia.NavigationControllerResarch;
+				PRODUCT_BUNDLE_IDENTIFIER = com.navigation.NavigationControllerResearch;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -403,13 +427,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 79D36Y5DN3;
 				INFOPLIST_FILE = NavigationControllerResarch/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.tokopedia.NavigationControllerResarch;
+				PRODUCT_BUNDLE_IDENTIFIER = com.navigation.NavigationControllerResearch;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

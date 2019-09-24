@@ -17,6 +17,7 @@ public class TKPNavigationBar: UINavigationBar {
         view.layer.shadowOpacity = 1
         view.layer.shadowOffset = CGSize(width: 0, height: -3)
         view.layer.shadowRadius = 2
+        view.autoresizingMask = [.flexibleWidth]
         return view
     }()
     
@@ -59,8 +60,7 @@ public class TKPNavigationBar: UINavigationBar {
                                     y: 0,
                                     width: topTitleView.frame.width,
                                     height: bounds.height)
-        print(topTitleView.frame)
-        
+        topItem?.tkpNavigationItem.layout(44)
      }
     
     
@@ -81,11 +81,10 @@ public class TKPNavigationBar: UINavigationBar {
     }
     
     private func configureBackButtonImage() {
-        guard let backButtonImage = UIImage(named: "left_arrow") else {
+        guard let backButtonImage = UIImage(named: "icon-back") else {
             assertionFailure("Custom back button image not found")
             return
         }
-        
         backIndicatorImage = backButtonImage
         backIndicatorTransitionMaskImage = backButtonImage
     }
@@ -99,8 +98,17 @@ public class TKPNavigationBar: UINavigationBar {
     private func changeBackgroundColor(with backgroundStyle: TKPNavigationItem.BackgroundStyle) {
         // if the backgroundStyle is transparent, we need to set `shadowOpacity` to `zero`
         let shadowOpacity: Float = backgroundStyle == .transparent ? 0 : 1
-        navigationView.layer.shadowOpacity = shadowOpacity
+        
         navigationView.backgroundColor = backgroundStyle.color
+        
+        let animation = CABasicAnimation(keyPath: "shadowOpacity")
+        animation.toValue = shadowOpacity
+        animation.duration = 0.3
+        animation.isRemovedOnCompletion = false
+        animation.fillMode = .forwards
+        navigationView.layer.add(animation, forKey: animation.keyPath)
+        navigationView.layer.shadowOpacity = 0
+//        navigationView.layer.shadowOpacity = shadowOpacity
     }
     
     required init?(coder: NSCoder) {
@@ -109,7 +117,8 @@ public class TKPNavigationBar: UINavigationBar {
     
     public override func pushItem(_ item: UINavigationItem, animated: Bool) {
         super.pushItem(item, animated: true)
-        
+   
+//        item.tkpNavigationItem.layout(<#T##height: CGFloat##CGFloat#>)
         setNeedsLayout()
         layoutIfNeeded()
     }
@@ -118,4 +127,10 @@ public class TKPNavigationBar: UINavigationBar {
         super.setItems(items, animated: animated)
     }
     
+}
+
+class ListOptions {
+    var params: [String: Any] = [:]
+    var key: String = ""
+    var value: String = ""
 }

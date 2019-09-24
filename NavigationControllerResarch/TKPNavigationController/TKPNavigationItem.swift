@@ -38,23 +38,26 @@ public class TKPNavigationItem: NSObject {
     
     internal init(_ navigationItem: UINavigationItem?) {
         self.navigationItem = navigationItem
+        navigationItem?.leftItemsSupplementBackButton = true
         super.init()
         self.commonInit()
     }
     
     internal func commonInit() {
         configureBackButton()
-        configreTitleView()
+        configureTitleView()
     }
     
     private func configureBackButton() {
         let emptyButton = UIView()
         emptyButton.frame = CGRect.zero
         let barButton = UIBarButtonItem(customView: emptyButton)
+        barButton.title = ""
+        
         navigationItem?.backBarButtonItem = barButton
     }
     
-    private func configreTitleView() {
+    private func configureTitleView() {
         navigationItem?.titleView = headerNode.view
     }
     
@@ -73,24 +76,37 @@ public class TKPNavigationItem: NSObject {
         }
         
         set {
+            setDefaultHeaderViewIfNeeded()
             headerNode.title = newValue
         }
     }
     
     public var subtitle: String? {
        get {
-           headerNode.subtitle
+            headerNode.subtitle
        }
        
        set {
-           headerNode.subtitle = newValue
+            setDefaultHeaderViewIfNeeded()
+            headerNode.subtitle = newValue
        }
     }
     
+    public func setTitleView(_ view: UIView) {
+        navigationItem?.titleView = view
+    }
+    
+    private func setDefaultHeaderViewIfNeeded() {
+        guard navigationItem?.titleView != headerNode.view else { return }
+        configureTitleView()
+    }
     
     internal func layout(_ height: CGFloat) {
         headerNode.setNeedsLayout()
         headerNode.layoutIfNeeded()
+       
+        navigationItem?.backBarButtonItem?.customView?.setNeedsLayout()
+        navigationItem?.backBarButtonItem?.customView?.layoutIfNeeded()
     }
 }
 

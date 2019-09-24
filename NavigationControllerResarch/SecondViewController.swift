@@ -17,7 +17,7 @@ class SecondViewController: UITableViewController, UIGestureRecognizerDelegate {
     
         tkpNavigationItem.title = "Second"
         tkpNavigationItem.subtitle = "Some title here"
-        navigationItem.titleView?.layoutIfNeeded()
+//        navigationItem.titleView?.layoutIfNeeded()
         
         let barButton = UIBarButtonItem(title: "Push", style: .plain, target: self, action: #selector(self.pushVC))
         navigationItem.rightBarButtonItem = barButton

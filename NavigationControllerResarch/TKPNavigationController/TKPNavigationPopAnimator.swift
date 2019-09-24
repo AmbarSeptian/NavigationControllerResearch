@@ -8,12 +8,14 @@
 
 import UIKit
 
-class TKPNavigationPopAnimator: NSObject, UIViewControllerAnimatedTransitioning {
-    func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
+internal class TKPNavigationPopAnimator: NSObject, UIViewControllerAnimatedTransitioning {
+    internal var isAnimating: Bool = false
+    
+    internal func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
         return 0.35
     }
     
-    func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
+    internal func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
         guard let fromVC = transitionContext.viewController(forKey: .from) else {
             assertionFailure("Previous ViewController while transitioning not found")
             return
@@ -44,15 +46,19 @@ class TKPNavigationPopAnimator: NSObject, UIViewControllerAnimatedTransitioning 
         
     
         let duration = transitionDuration(using: transitionContext)
+        
+        isAnimating = true
         UIView.animate(withDuration: duration, delay: 0, options: .curveEaseOut, animations: {
             fromVC.view.frame = fromVC.view.frame.offsetBy(dx: fromVC.view.frame.width, dy: 0)
             toVC.view.frame = finalFrame
             shadowMask.alpha = 0
             tkpNavigationBar.backgroundStyle = nextStyle
         }) { _ in
+            self.isAnimating = false
             shadowMask.removeFromSuperview()
+            
             let completeTransition = !(transitionContext.transitionWasCancelled)
-        transitionContext.completeTransition(completeTransition)
+            transitionContext.completeTransition(completeTransition)
         }
         
     }

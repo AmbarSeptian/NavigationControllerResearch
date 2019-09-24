@@ -18,10 +18,26 @@ class ThirdViewController: UIViewController {
         let barButton = UIBarButtonItem(title: "Push", style: .plain, target: self, action: #selector(pushVC))
         navigationItem.rightBarButtonItem = barButton
         
-//        tkpNavigationItem.layout()
         view.backgroundColor = .white
+        tkpNavigationItem.setTitleView(setupSearchBar())
     }
     
+    private func setupSearchBar() -> UISearchBar {
+           let searchBar = UISearchBar(frame: .zero)
+           searchBar.placeholder = "Cari di Tokopedia"
+           searchBar.sizeToFit()
+           searchBar.searchBarStyle = .minimal
+           searchBar.isUserInteractionEnabled = true
+           searchBar.tintColor = .white
+           searchBar.placeholder = "Cari Hehe"
+           
+           return searchBar
+       }
+      
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+    }
 
     @objc func pushVC() {
         let vc = SecondViewController()
