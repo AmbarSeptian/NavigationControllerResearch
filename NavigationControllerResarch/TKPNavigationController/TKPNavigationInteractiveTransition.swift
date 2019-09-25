@@ -21,6 +21,17 @@ internal class TKPNavigationInteractiveTransition: UIPercentDrivenInteractiveTra
         return gesture
     }()
     
+    
+    internal override var completionSpeed: CGFloat {
+        get {
+            print("::Name \(max(CGFloat(0.5), 1 - self.percentComplete))")
+            return max(0.5, 1 - percentComplete)
+        }
+        set{
+            self.completionSpeed = newValue
+        }
+    }
+    
     internal weak var delegate: TKPNavigationTransitionDelegate?
 
     /// Boolean value that indicates if the panGesture currently is being interacted

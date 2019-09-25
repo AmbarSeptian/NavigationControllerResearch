@@ -18,8 +18,12 @@ class ThirdViewController: UIViewController {
         let barButton = UIBarButtonItem(title: "Push", style: .plain, target: self, action: #selector(pushVC))
         navigationItem.rightBarButtonItem = barButton
         
-        view.backgroundColor = .white
-        tkpNavigationItem.setTitleView(setupSearchBar())
+        view.backgroundColor = #colorLiteral(red: 0.4745098054, green: 0.8392156959, blue: 0.9764705896, alpha: 1)
+//        tkpNavigationItem.setTitleView(setupSearchBar())
+        
+        tkpNavigationItem.title =  "Third View Controller"
+        tkpNavigationItem.subtitle = "AAAbbbbccc"
+        tkpNavigationItem.backgroundStyle = .basic
     }
     
     private func setupSearchBar() -> UISearchBar {
@@ -29,7 +33,6 @@ class ThirdViewController: UIViewController {
            searchBar.searchBarStyle = .minimal
            searchBar.isUserInteractionEnabled = true
            searchBar.tintColor = .white
-           searchBar.placeholder = "Cari Hehe"
            
            return searchBar
        }

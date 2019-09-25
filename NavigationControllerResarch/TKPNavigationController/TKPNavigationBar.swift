@@ -13,10 +13,17 @@ public class TKPNavigationBar: UINavigationBar {
         let view = UIView()
         view.isUserInteractionEnabled = false
         view.clipsToBounds = false
+        view.autoresizingMask = [.flexibleWidth]
+        return view
+    }()
+    
+    private let shadowView: UIView = {
+        let view = UIView()
+        view.isUserInteractionEnabled = false
         view.layer.shadowColor = UIColor.black.cgColor
-        view.layer.shadowOpacity = 1
-        view.layer.shadowOffset = CGSize(width: 0, height: -3)
-        view.layer.shadowRadius = 2
+        view.layer.shadowOpacity = 0.3
+        view.layer.shadowOffset = CGSize(width: 0, height: 0.5)
+        view.layer.shadowRadius = 0.5
         view.autoresizingMask = [.flexibleWidth]
         return view
     }()
@@ -42,18 +49,22 @@ public class TKPNavigationBar: UINavigationBar {
     
     public override func layoutSubviews() {
         super.layoutSubviews()
+        
+        shadowView.layer.zPosition = -2
         navigationView.layer.zPosition = -1
+        
         let statusBarHeight = UIApplication.shared.statusBarFrame.height
         navigationView.frame = CGRect(x: 0,
                                       y: -statusBarHeight,
                                       width: bounds.width,
                                       height: bounds.height + statusBarHeight)
         
-        let shadowRect = CGRect(x: 0,
-                                y: navigationView.bounds.height,
-                                width: navigationView.bounds.width,
-                                height: 1)
-        navigationView.layer.shadowPath = UIBezierPath(rect: shadowRect).cgPath
+        
+       
+        shadowView.frame = CGRect(x: 0,
+                                  y: bounds.height,
+                                  width: navigationView.bounds.width, height: 0.5)
+        shadowView.layer.shadowPath = UIBezierPath(rect: shadowView.bounds).cgPath
         
         guard let topTitleView = topItem?.titleView else { return }
         topTitleView.frame = CGRect(x: topTitleView.frame.origin.x,
@@ -75,8 +86,8 @@ public class TKPNavigationBar: UINavigationBar {
         // property by set to nil, so we need to hide `shadowImage` and use our custom shadow on `navigationView` property
         shadowImage = UIImage()
         
-        
         insertSubview(navigationView, at: 0)
+        insertSubview(shadowView, belowSubview: navigationView)
         changeBackgroundColor(with: backgroundStyle)
     }
     
@@ -97,18 +108,10 @@ public class TKPNavigationBar: UINavigationBar {
     
     private func changeBackgroundColor(with backgroundStyle: TKPNavigationItem.BackgroundStyle) {
         // if the backgroundStyle is transparent, we need to set `shadowOpacity` to `zero`
-        let shadowOpacity: Float = backgroundStyle == .transparent ? 0 : 1
+        let shadowOpacity: CGFloat = backgroundStyle == .transparent ? 0 : 1
         
         navigationView.backgroundColor = backgroundStyle.color
-        
-        let animation = CABasicAnimation(keyPath: "shadowOpacity")
-        animation.toValue = shadowOpacity
-        animation.duration = 0.3
-        animation.isRemovedOnCompletion = false
-        animation.fillMode = .forwards
-        navigationView.layer.add(animation, forKey: animation.keyPath)
-        navigationView.layer.shadowOpacity = 0
-//        navigationView.layer.shadowOpacity = shadowOpacity
+        shadowView.alpha = shadowOpacity
     }
     
     required init?(coder: NSCoder) {
@@ -118,7 +121,6 @@ public class TKPNavigationBar: UINavigationBar {
     public override func pushItem(_ item: UINavigationItem, animated: Bool) {
         super.pushItem(item, animated: true)
    
-//        item.tkpNavigationItem.layout(<#T##height: CGFloat##CGFloat#>)
         setNeedsLayout()
         layoutIfNeeded()
     }
@@ -127,10 +129,4 @@ public class TKPNavigationBar: UINavigationBar {
         super.setItems(items, animated: animated)
     }
     
-}
-
-class ListOptions {
-    var params: [String: Any] = [:]
-    var key: String = ""
-    var value: String = ""
 }
