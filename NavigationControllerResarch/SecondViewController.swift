@@ -8,12 +8,11 @@
 
 import UIKit
 
-class SecondViewController: UITableViewController, UIGestureRecognizerDelegate {
+class SecondViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
-        navigationController?.interactivePopGestureRecognizer?.delegate = self
     
         tkpNavigationItem.title = "Second"
         tkpNavigationItem.subtitle = "Some title here"

@@ -9,6 +9,9 @@
 import UIKit
 
 public class TKPNavigationBar: UINavigationBar {
+    // The view that we used for replacement background view of navigationBar
+    // We can use native background navigationBar and use `setBackgroundImage` for backgroundColor but we need to achive smooth transition when navigation pushed or popped so the customView is better approach
+    // Another approach is use private api `valueForKey(_backgroundView)` to get `UIView` from navigationBar but it's hacky way and unsafe
     private let navigationView: UIView = {
         let view = UIView()
         view.isUserInteractionEnabled = false
@@ -17,6 +20,10 @@ public class TKPNavigationBar: UINavigationBar {
         return view
     }()
     
+    // The view that we used for replacement `shadowImage` of navigationBar
+    // Because `shadowImage` property of navigationBar doesn't work properly if you want toggle show or hide with `isTranslucent` property value is `true`.
+    // We can use `navigationView.layer.shadow(s)` property to achive this, but it will show glitch whenever navigation push or popped because we to animate layer we need `Core Animation`
+    // So we use regular UIView then if we need animate it, we just animate the `alpha` use `UIView.animateWithDuration`
     private let shadowView: UIView = {
         let view = UIView()
         view.isUserInteractionEnabled = false
@@ -71,7 +78,7 @@ public class TKPNavigationBar: UINavigationBar {
                                     y: 0,
                                     width: topTitleView.frame.width,
                                     height: bounds.height)
-        topItem?.tkpNavigationItem.layout(44)
+//        topItem?.tkpNavigationItem.layout(44)
      }
     
     
@@ -83,7 +90,7 @@ public class TKPNavigationBar: UINavigationBar {
         setBackgroundImage(UIImage(), for: .default)
         
         // override shadowImage because in iOS 13 we can't toggle show `shadowImage`
-        // property by set to nil, so we need to hide `shadowImage` and use our custom shadow on `navigationView` property
+        // property by set to nil, so we need to hide `shadowImage` and use our custom shadow on `shadowView` property
         shadowImage = UIImage()
         
         insertSubview(navigationView, at: 0)

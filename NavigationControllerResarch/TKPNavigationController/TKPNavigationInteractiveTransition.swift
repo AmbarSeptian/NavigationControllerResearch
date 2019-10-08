@@ -10,7 +10,7 @@ import UIKit
 
 protocol TKPNavigationTransitionDelegate: class {
     func triggerPopViewController()
-    var isViewControllersNotEmpty: Bool { get }
+    var isInteractionTransitionAllowed: Bool { get }
     var isPopAnimatorAnimating: Bool { get }
 }
 
@@ -20,7 +20,6 @@ internal class TKPNavigationInteractiveTransition: UIPercentDrivenInteractiveTra
         gesture.addTarget(self, action: #selector(self.handleGesture(_:)))
         return gesture
     }()
-    
     
     internal override var completionSpeed: CGFloat {
         get {
@@ -33,6 +32,7 @@ internal class TKPNavigationInteractiveTransition: UIPercentDrivenInteractiveTra
     }
     
     internal weak var delegate: TKPNavigationTransitionDelegate?
+    internal weak var transitionContext: UIViewControllerContextTransitioning?
 
     /// Boolean value that indicates if the panGesture currently is being interacted
     internal var isInteracting: Bool = false
@@ -42,6 +42,15 @@ internal class TKPNavigationInteractiveTransition: UIPercentDrivenInteractiveTra
     }
     
     @objc private func handleGesture(_ panGesture: UIPanGestureRecognizer) {
+        guard let delegate = delegate else {
+            assertionFailure("Delegate must not empty")
+            return
+        }
+        
+        guard delegate.isInteractionTransitionAllowed else {
+            return
+        }
+        
         let offset = panGesture.translation(in: panGesture.view)
         let velocity = panGesture.velocity(in: panGesture.view)
 
@@ -50,12 +59,9 @@ internal class TKPNavigationInteractiveTransition: UIPercentDrivenInteractiveTra
         
         switch panGesture.state {
         case .began:
-            guard let delegate = delegate, !(delegate.isPopAnimatorAnimating) else {
-                return
-            }
             isInteracting = true
             
-            if isGestureMovingToRight, delegate.isViewControllersNotEmpty {
+            if isGestureMovingToRight {
                  delegate.triggerPopViewController()
             }
         case .changed:
@@ -67,18 +73,19 @@ internal class TKPNavigationInteractiveTransition: UIPercentDrivenInteractiveTra
             guard isInteracting else { return }
             
             if isGestureMovingToRight {
+                print("::Finish \(percentComplete)")
                 self.finish()
             } else {
                 self.cancel()
+                print("::Cancel \(percentComplete)")
             }
             isInteracting = false
             
         case .cancelled:
             guard isInteracting else { return }
-            
-            cancel()
             isInteracting = false
-
+            cancel()
+            print("::ACancel")
         case .possible, .failed:
             break
         @unknown default:
@@ -86,3 +93,5 @@ internal class TKPNavigationInteractiveTransition: UIPercentDrivenInteractiveTra
         }
     }
 }
+
+

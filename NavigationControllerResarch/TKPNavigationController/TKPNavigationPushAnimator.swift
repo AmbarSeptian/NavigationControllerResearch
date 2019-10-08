@@ -51,6 +51,7 @@ internal class TKPNavigationPushAnimator: NSObject, UIViewControllerAnimatedTran
             shadowMask.alpha = 0.1
             tkpNavigationBar.backgroundStyle = nextStyle
             
+            toVC.tkpNavigationItem.headerNode.transitionLayout(withAnimation: false, shouldMeasureAsync: false)
         }) { _ in
             fromVC.view.frame = originFrame
             shadowMask.removeFromSuperview()

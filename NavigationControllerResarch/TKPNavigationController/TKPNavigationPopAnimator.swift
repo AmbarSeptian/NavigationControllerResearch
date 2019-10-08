@@ -43,22 +43,29 @@ internal class TKPNavigationPopAnimator: NSObject, UIViewControllerAnimatedTrans
         
         containerView.insertSubview(toVC.view, belowSubview: fromVC.view)
         containerView.insertSubview(shadowMask, aboveSubview: toVC.view)
-        
     
         let duration = transitionDuration(using: transitionContext)
         
         isAnimating = true
+        toVC.tkpNavigationItem.headerNode.transitionLayout(withAnimation: false, shouldMeasureAsync: false)
+        
         UIView.animate(withDuration: duration, delay: 0, options: .curveEaseOut, animations: {
             fromVC.view.frame = fromVC.view.frame.offsetBy(dx: fromVC.view.frame.width, dy: 0)
             toVC.view.frame = finalFrame
             shadowMask.alpha = 0
             tkpNavigationBar.backgroundStyle = nextStyle
+            
         }) { _ in
             self.isAnimating = false
             shadowMask.removeFromSuperview()
             
             let completeTransition = !(transitionContext.transitionWasCancelled)
             transitionContext.completeTransition(completeTransition)
+            
+            toVC.navigationItem.rightBarButtonItems?.forEach({ barButton in
+                barButton.setTitleTextAttributes(barButton.titleTextAttributes(for: .normal), for: .normal)
+            })
+//            transitionContext.updateInteractiveTransition(1)
         }
         
     }

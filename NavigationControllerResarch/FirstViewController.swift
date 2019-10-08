@@ -20,8 +20,12 @@ class FirstViewController: UITableViewController {
 //        navigationController?.navigationBar.backgroundColor = .clear
         
         let barButton = UIBarButtonItem(title: "Push", style: .plain, target: self, action: #selector(self.pushVC))
-        navigationItem.rightBarButtonItem = barButton
-        navigationController?.interactivePopGestureRecognizer?.delegate = self
+//        let barButton = UIBarButtonItem(image: #imageLiteral(resourceName: "icon-back"), style: .plain, target: self, action: #selector(self.pushVC))
+        
+        let space = UIBarButtonItem(barButtonSystemItem: .fixedSpace, target: nil, action: nil)
+        space.width = 20
+        let anotherButton = UIBarButtonItem(image: #imageLiteral(resourceName: "icon-back"), style: .plain, target: self, action: #selector(self.pushVC))
+        navigationItem.rightBarButtonItems = [barButton, space, anotherButton]
     
         view.backgroundColor = #colorLiteral(red: 0.9764705896, green: 0.850980401, blue: 0.5490196347, alpha: 1)
         
@@ -35,24 +39,25 @@ class FirstViewController: UITableViewController {
         }, completion: nil)
         
         tkpNavigationItem.backgroundStyle = .basic
-       
+        
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        tkpNavigationItem.title = "First"
+        tkpNavigationItem.title = "Dynamic Title"
 //        tkpNavigationItem.layout()
     }
     
 
     override func motionEnded(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
         guard motion == .motionShake else { return }
-        pushVC()
+        dismiss(animated: true, completion: nil)
     }
     
     
     @objc func pushVC() {
-        let vc = ThirdViewController()
+        let vc = SecondViewController()
         navigationController?.pushViewController(vc, animated: true)
     }
     
@@ -65,12 +70,6 @@ class FirstViewController: UITableViewController {
         cell.textLabel?.text = "\(indexPath.row)"
         cell.contentView.backgroundColor = #colorLiteral(red: 0.9764705896, green: 0.850980401, blue: 0.5490196347, alpha: 1)
         return cell
-    }
-}
-
-extension FirstViewController: UIGestureRecognizerDelegate {
-    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldBeRequiredToFailBy otherGestureRecognizer: UIGestureRecognizer) -> Bool {
-        return true
     }
 }
 

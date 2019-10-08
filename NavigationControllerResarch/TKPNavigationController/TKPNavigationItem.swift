@@ -46,6 +46,7 @@ public class TKPNavigationItem: NSObject {
     internal func commonInit() {
         configureBackButton()
         configureTitleView()
+    
     }
     
     private func configureBackButton() {
@@ -63,7 +64,7 @@ public class TKPNavigationItem: NSObject {
     
     public var hidesBackButton: Bool {
         get {
-            navigationItem?.hidesBackButton ?? false
+            return navigationItem?.hidesBackButton ?? false
         }
         set {
             navigationItem?.hidesBackButton = newValue
@@ -72,7 +73,7 @@ public class TKPNavigationItem: NSObject {
     
     public var title: String? {
         get {
-            headerNode.title
+            return headerNode.title
         }
         
         set {
@@ -83,7 +84,7 @@ public class TKPNavigationItem: NSObject {
     
     public var subtitle: String? {
        get {
-            headerNode.subtitle
+            return headerNode.subtitle
        }
        
        set {
@@ -104,7 +105,7 @@ public class TKPNavigationItem: NSObject {
     internal func layout(_ height: CGFloat) {
         headerNode.setNeedsLayout()
         headerNode.layoutIfNeeded()
-       
+        
         navigationItem?.backBarButtonItem?.customView?.setNeedsLayout()
         navigationItem?.backBarButtonItem?.customView?.layoutIfNeeded()
     }
@@ -128,6 +129,9 @@ class TKPNavigationHeaderNode: ASDisplayNode {
     
     internal var title: String? {
         didSet {
+            defer {
+                transitionLayout()
+            }
             guard let title = title else {
                 titleNode.attributedText = nil
                 return
@@ -139,6 +143,10 @@ class TKPNavigationHeaderNode: ASDisplayNode {
     
     internal var subtitle: String? {
           didSet {
+            defer {
+                transitionLayout()
+            }
+            
               guard let subtitle = subtitle else {
                   subtitleNode.attributedText = nil
                   return
@@ -151,14 +159,24 @@ class TKPNavigationHeaderNode: ASDisplayNode {
         super.init()
         automaticallyManagesSubnodes = true
         titleNode.attributedText = NSAttributedString(string: "Header", attributes: [:])
-        subtitleNode.attributedText = NSAttributedString(string: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam", attributes: [:])
+//        subtitleNode.attributedText = NSAttributedString(string: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam", attributes: [:])
+        subtitleNode.attributedText = nil
+        subtitleNode.backgroundColor = .red
+        subtitleNode.style.flexShrink = 1
+        backgroundColor = .gray
     }
     
     override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
+        let stackLayout = ASStackLayoutSpec()
         return ASStackLayoutSpec(direction: .vertical,
                                  spacing: 2,
-                                 justifyContent: .start,
+                                 justifyContent: .center,
                                  alignItems: .stretch,
                                  children: [titleNode, subtitleNode])
+    }
+    
+    private func transitionLayout() {
+        let isAnimated = isNodeLoaded
+        transitionLayout(withAnimation: false, shouldMeasureAsync: true)
     }
 }
