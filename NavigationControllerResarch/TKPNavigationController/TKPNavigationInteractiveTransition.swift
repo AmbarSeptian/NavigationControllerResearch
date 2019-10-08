@@ -18,6 +18,7 @@ internal class TKPNavigationInteractiveTransition: UIPercentDrivenInteractiveTra
     private lazy var panGesture: UIPanGestureRecognizer = {
         let gesture = UIPanGestureRecognizer()
         gesture.addTarget(self, action: #selector(self.handleGesture(_:)))
+        gesture.delegate = self
         return gesture
     }()
     
@@ -56,10 +57,13 @@ internal class TKPNavigationInteractiveTransition: UIPercentDrivenInteractiveTra
 
         // we only need handle when panGesture swipe from left to right
         let isGestureMovingToRight = velocity.x > 0
+        print("::Velocity \(velocity)")
+        print("::Translation \(offset)")
         
         switch panGesture.state {
         case .began:
             isInteracting = true
+            let threshold: CGFloat = 100
             
             if isGestureMovingToRight {
                  delegate.triggerPopViewController()
@@ -75,7 +79,7 @@ internal class TKPNavigationInteractiveTransition: UIPercentDrivenInteractiveTra
             if isGestureMovingToRight {
                 print("::Finish \(percentComplete)")
                 self.finish()
-            } else {
+            } else if offset.x > 0 {
                 self.cancel()
                 print("::Cancel \(percentComplete)")
             }
@@ -94,4 +98,14 @@ internal class TKPNavigationInteractiveTransition: UIPercentDrivenInteractiveTra
     }
 }
 
-
+extension TKPNavigationInteractiveTransition: UIGestureRecognizerDelegate {
+    
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        if gestureRecognizer == panGesture, let otherPanGesture = otherGestureRecognizer as? UIPanGestureRecognizer, let scrollView = otherPanGesture.view as? UIScrollView {
+            if scrollView.contentOffset.x > 0 {
+                return false
+            }
+        }
+        return true
+    }
+}

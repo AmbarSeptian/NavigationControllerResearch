@@ -65,7 +65,6 @@ internal class TKPNavigationPopAnimator: NSObject, UIViewControllerAnimatedTrans
             toVC.navigationItem.rightBarButtonItems?.forEach({ barButton in
                 barButton.setTitleTextAttributes(barButton.titleTextAttributes(for: .normal), for: .normal)
             })
-//            transitionContext.updateInteractiveTransition(1)
         }
         
     }
