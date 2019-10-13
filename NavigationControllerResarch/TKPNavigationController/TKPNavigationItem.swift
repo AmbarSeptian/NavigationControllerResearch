@@ -11,13 +11,13 @@ import AsyncDisplayKit
 public class TKPNavigationItem: NSObject {
     private weak var navigationItem: UINavigationItem?
     internal lazy var headerNode: TKPNavigationHeaderNode = {
-      return TKPNavigationHeaderNode()
+        return TKPNavigationHeaderNode()
     }()
     
     public enum BackgroundStyle {
         case basic
         case transparent
-    
+        
         internal var color: UIColor {
             switch self {
             case .basic:
@@ -43,25 +43,6 @@ public class TKPNavigationItem: NSObject {
         self.commonInit()
     }
     
-    internal func commonInit() {
-        configureBackButton()
-        configureTitleView()
-    
-    }
-    
-    private func configureBackButton() {
-        let emptyButton = UIView()
-        emptyButton.frame = CGRect.zero
-        let barButton = UIBarButtonItem(customView: emptyButton)
-        barButton.title = ""
-        
-        navigationItem?.backBarButtonItem = barButton
-    }
-    
-    private func configureTitleView() {
-        navigationItem?.titleView = headerNode.view
-    }
-    
     public var hidesBackButton: Bool {
         get {
             return navigationItem?.hidesBackButton ?? false
@@ -83,14 +64,34 @@ public class TKPNavigationItem: NSObject {
     }
     
     public var subtitle: String? {
-       get {
+        get {
             return headerNode.subtitle
-       }
-       
-       set {
+        }
+        
+        set {
             setDefaultHeaderViewIfNeeded()
             headerNode.subtitle = newValue
-       }
+        }
+    }
+    
+    public var rightBarButtonItems: [UIBarButtonItem] {
+        get {
+            return navigationItem?.rightBarButtonItems ?? []
+        }
+        
+        set {
+            navigationItem?.rightBarButtonItems = newValue
+        }
+    }
+    
+    public var rightBarButtonItem: UIBarButtonItem? {
+        get {
+            return navigationItem?.rightBarButtonItem
+        }
+        
+        set {
+            navigationItem?.rightBarButtonItem = newValue
+        }
     }
     
     public func setTitleView(_ view: UIView) {
@@ -102,6 +103,25 @@ public class TKPNavigationItem: NSObject {
         configureTitleView()
     }
     
+    private func commonInit() {
+        configureBackButton()
+        configureTitleView()
+    }
+    
+    private func configureBackButton() {
+        let emptyButton = UIView()
+        emptyButton.frame = CGRect.zero
+        let barButton = UIBarButtonItem(customView: emptyButton)
+        barButton.title = ""
+        
+        navigationItem?.backBarButtonItem = barButton
+    }
+    
+    private func configureTitleView() {
+        navigationItem?.titleView = headerNode.view
+    }
+    
+    
     internal func layout(_ height: CGFloat) {
         headerNode.setNeedsLayout()
         headerNode.layoutIfNeeded()
@@ -112,7 +132,7 @@ public class TKPNavigationItem: NSObject {
 }
 
 
-class TKPNavigationHeaderNode: ASDisplayNode {
+internal class TKPNavigationHeaderNode: ASDisplayNode {
     private let titleNode: ASTextNode = {
         let node = ASTextNode()
         node.maximumNumberOfLines = 1
@@ -142,24 +162,24 @@ class TKPNavigationHeaderNode: ASDisplayNode {
     }
     
     internal var subtitle: String? {
-          didSet {
+        didSet {
             defer {
                 transitionLayout()
             }
             
-              guard let subtitle = subtitle else {
-                  subtitleNode.attributedText = nil
-                  return
-              }
-              subtitleNode.attributedText = NSAttributedString(string: subtitle, attributes: nil)
-          }
-      }
+            guard let subtitle = subtitle else {
+                subtitleNode.attributedText = nil
+                return
+            }
+            subtitleNode.attributedText = NSAttributedString(string: subtitle, attributes: nil)
+        }
+    }
     
     override init() {
         super.init()
         automaticallyManagesSubnodes = true
         titleNode.attributedText = NSAttributedString(string: "Header", attributes: [:])
-//        subtitleNode.attributedText = NSAttributedString(string: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam", attributes: [:])
+        //        subtitleNode.attributedText = NSAttributedString(string: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam", attributes: [:])
         subtitleNode.attributedText = nil
         subtitleNode.backgroundColor = .red
         subtitleNode.style.flexShrink = 1

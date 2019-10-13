@@ -118,7 +118,7 @@ class NavigationConfiguratorViewController: UIViewController {
             tkpNavigationItem.subtitle = configurator.subtitle
         }
         //todo
-        navigationItem.rightBarButtonItems = configurator.barButtons
+        tkpNavigationItem.rightBarButtonItems = configurator.barButtons
     }
     
     @objc func pushViewController() {
