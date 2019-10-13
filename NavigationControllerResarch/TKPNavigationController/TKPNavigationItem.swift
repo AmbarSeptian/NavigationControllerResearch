@@ -10,6 +10,7 @@ import AsyncDisplayKit
 
 public class TKPNavigationItem: NSObject {
     private weak var navigationItem: UINavigationItem?
+    
     internal lazy var headerNode: TKPNavigationHeaderNode = {
         return TKPNavigationHeaderNode()
     }()
@@ -120,15 +121,6 @@ public class TKPNavigationItem: NSObject {
     private func configureTitleView() {
         navigationItem?.titleView = headerNode.view
     }
-    
-    
-    internal func layout(_ height: CGFloat) {
-        headerNode.setNeedsLayout()
-        headerNode.layoutIfNeeded()
-        
-        navigationItem?.backBarButtonItem?.customView?.setNeedsLayout()
-        navigationItem?.backBarButtonItem?.customView?.layoutIfNeeded()
-    }
 }
 
 
@@ -179,7 +171,6 @@ internal class TKPNavigationHeaderNode: ASDisplayNode {
         super.init()
         automaticallyManagesSubnodes = true
         titleNode.attributedText = NSAttributedString(string: "Header", attributes: [:])
-        //        subtitleNode.attributedText = NSAttributedString(string: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam", attributes: [:])
         subtitleNode.attributedText = nil
         subtitleNode.backgroundColor = .red
         subtitleNode.style.flexShrink = 1

@@ -13,7 +13,7 @@ struct NavigatorConfigurator {
     var title: String?
     var subtitle: String?
     var useCustomTitleView: Bool
-    var hideNavBar: Bool
+    var hidesBackButton: Bool
     var barButtons: [UIBarButtonItem]
 }
 
@@ -23,7 +23,7 @@ class NavigationConfiguratorViewController: UIViewController {
         case title
         case subtitle
         case useCustomTitleView
-        case hideNavBar
+        case hidesBackButton
         case addBarButton
         case pushViewController
         
@@ -37,8 +37,8 @@ class NavigationConfiguratorViewController: UIViewController {
                 return "Subtitle"
             case .useCustomTitleView:
                 return "Use Custom TitleView"
-            case .hideNavBar:
-                return "Hide Navigation Bar"
+            case .hidesBackButton:
+                return "Hide Back Button"
             case .addBarButton:
                 return "Add Right Bar Button"
             case .pushViewController:
@@ -51,7 +51,7 @@ class NavigationConfiguratorViewController: UIViewController {
     let subtitleTextField = UITextField()
     let backgroundStyleSwitcher = UISwitch()
     let useCustomTitleViewSwitcher = UISwitch()
-    let hideNavBarSwitcher = UISwitch()
+    let hidesBackButtonSwitcher = UISwitch()
     lazy var addBarButtonStepper: UIStepper = {
         let stepper = UIStepper()
         stepper.addTarget(self,
@@ -70,7 +70,7 @@ class NavigationConfiguratorViewController: UIViewController {
                                      title: "Title Goes here",
                                      subtitle: "Subtitle Goes Here",
                                      useCustomTitleView: false,
-                                     hideNavBar: false,
+                                     hidesBackButton: false,
                                      barButtons: [])
     }()
     
@@ -118,6 +118,7 @@ class NavigationConfiguratorViewController: UIViewController {
             tkpNavigationItem.subtitle = configurator.subtitle
         }
         //todo
+        tkpNavigationItem.hidesBackButton = configurator.hidesBackButton
         tkpNavigationItem.rightBarButtonItems = configurator.barButtons
     }
     
@@ -126,7 +127,7 @@ class NavigationConfiguratorViewController: UIViewController {
         let title = titleTextField.text
         let subtitle = subtitleTextField.text
         let useCustomTitleView = useCustomTitleViewSwitcher.isOn
-        let hideNavBar = hideNavBarSwitcher.isOn
+        let hidesBackButton = hidesBackButtonSwitcher.isOn
         let barButtons = (0..<Int(addBarButtonStepper.value)).map { _ -> UIBarButtonItem in
             return UIBarButtonItem(title: "Button", style: .plain, target: nil, action: nil)
         }
@@ -135,8 +136,9 @@ class NavigationConfiguratorViewController: UIViewController {
                                                      title: title,
                                                      subtitle: subtitle,
                                                      useCustomTitleView: useCustomTitleView,
-                                                     hideNavBar: hideNavBar,
+                                                     hidesBackButton: hidesBackButton,
                                                      barButtons: barButtons)
+        
         let nextVC = NavigationConfiguratorViewController(currentConfigurator: nextConfigurator)
         navigationController?.pushViewController(nextVC, animated: true)
     }
@@ -174,9 +176,9 @@ extension NavigationConfiguratorViewController: UITableViewDataSource {
         case .backgroundStyle:
             cell.contentView.addSubview(backgroundStyleSwitcher)
             backgroundStyleSwitcher.frame = contentFrame
-        case .hideNavBar:
-            cell.contentView.addSubview(hideNavBarSwitcher)
-            hideNavBarSwitcher.frame = contentFrame
+        case .hidesBackButton:
+            cell.contentView.addSubview(hidesBackButtonSwitcher)
+            hidesBackButtonSwitcher.frame = contentFrame
         case .useCustomTitleView:
             cell.contentView.addSubview(useCustomTitleViewSwitcher)
             useCustomTitleViewSwitcher.frame = contentFrame

@@ -66,20 +66,14 @@ public class TKPNavigationBar: UINavigationBar {
                                       width: bounds.width,
                                       height: bounds.height + statusBarHeight)
         
-        
-       
         shadowView.frame = CGRect(x: 0,
                                   y: bounds.height,
                                   width: navigationView.bounds.width, height: 0.5)
         shadowView.layer.shadowPath = UIBezierPath(rect: shadowView.bounds).cgPath
         
-        guard let topTitleView = topItem?.titleView else { return }
-        topTitleView.frame = CGRect(x: topTitleView.frame.origin.x,
-                                    y: 0,
-                                    width: topTitleView.frame.width,
-                                    height: bounds.height)
-//        topItem?.tkpNavigationItem.layout(44)
-     }
+        guard let topItem = topItem else { return }
+        updateNavigationItemLayout(topItem)
+    }
     
     
     private func commonInit() {
@@ -121,19 +115,20 @@ public class TKPNavigationBar: UINavigationBar {
         shadowView.alpha = shadowOpacity
     }
     
+    private func updateNavigationItemLayout(_ item: UINavigationItem) {
+        guard let titleView = item.titleView else { return }
+        titleView.frame = CGRect(x: 0,
+                                 y: 0,
+                                 width: titleView.frame.width,
+                                 height: bounds.height)
+    }
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
     public override func pushItem(_ item: UINavigationItem, animated: Bool) {
+        updateNavigationItemLayout(item)
         super.pushItem(item, animated: true)
-   
-        setNeedsLayout()
-        layoutIfNeeded()
     }
-    
-    public override func setItems(_ items: [UINavigationItem]?, animated: Bool) {
-        super.setItems(items, animated: animated)
-    }
-    
 }

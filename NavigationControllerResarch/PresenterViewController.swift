@@ -42,7 +42,7 @@ class PresenterViewController: UIViewController {
     }
     
     @objc func presentRegularVC() {
-        let vc = FirstViewController()
+        let vc = RegularViewController()
                
         let nav = UINavigationController(rootViewController: vc)
         nav.modalPresentationStyle = .fullScreen
