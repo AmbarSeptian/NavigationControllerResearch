@@ -167,7 +167,6 @@ class TKPNavigationHeaderNode: ASDisplayNode {
     }
     
     override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
-        let stackLayout = ASStackLayoutSpec()
         return ASStackLayoutSpec(direction: .vertical,
                                  spacing: 2,
                                  justifyContent: .center,

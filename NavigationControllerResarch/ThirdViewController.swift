@@ -7,7 +7,7 @@
 //  Copyright © 2019 Ambar Septian. All rights reserved.
 //
 
-import UIKit
+import AsyncDisplayKit
 
 class ThirdViewController: UIViewController {
     var someClosure: (() -> Void)?
@@ -24,8 +24,12 @@ class ThirdViewController: UIViewController {
         someView.backgroundColor = .red
         someView.frame.size = CGSize(width: 300, height: 100)
         
-        tkpNavigationItem.subtitle = nil    
-//        tkpNavigationItem.setTitleView(someView)
+        tkpNavigationItem.subtitle = nil
+        
+        let view = UIView()
+        view.backgroundColor = .red
+        view.frame = CGRect(x: 0, y: 0, width: 20, height: 100)
+        self.view.addSubview(view)
     }
     
     private func setupSearchBar() -> UISearchBar {
@@ -37,14 +41,6 @@ class ThirdViewController: UIViewController {
        searchBar.tintColor = .white
        
        return searchBar
-    }
-      
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        let nav = navigationController!.navigationBar
-        nav.frame = CGRect(x: 0, y: 0, width: nav.bounds.width, height: nav.bounds.height + 50)
-
-
     }
 
     @objc func pushVC() {

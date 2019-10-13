@@ -63,8 +63,6 @@ internal class TKPNavigationInteractiveTransition: UIPercentDrivenInteractiveTra
         switch panGesture.state {
         case .began:
             isInteracting = true
-            let threshold: CGFloat = 100
-            
             if isGestureMovingToRight {
                  delegate.triggerPopViewController()
             }

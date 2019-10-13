@@ -14,12 +14,18 @@ class PresenterViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .white
         
-        let button = UIButton(type: .system)
-        button.setTitle("Present", for: .normal)
-        button.addTarget(self, action: #selector(self.presentVC), for: .touchUpInside)
-        view.addSubview(button)
+        let customNavButton = UIButton(type: .system)
+        customNavButton.setTitle("Present Custom Navigation", for: .normal)
+        customNavButton.addTarget(self, action: #selector(self.presentVC), for: .touchUpInside)
+        view.addSubview(customNavButton)
         
-        button.frame = CGRect(x: 100, y: 300 , width: 100, height: 100)
+        let regularNavButton = UIButton(type: .system)
+        regularNavButton.setTitle("Present Regular Navigation", for: .normal)
+        regularNavButton.addTarget(self, action: #selector(self.presentRegularVC), for: .touchUpInside)
+        view.addSubview(regularNavButton)
+        
+        customNavButton.frame = CGRect(x: 100, y: 300 , width: 200, height: 100)
+        regularNavButton.frame = CGRect(x: 100, y: 400 , width: 200, height: 100)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -28,10 +34,19 @@ class PresenterViewController: UIViewController {
     }
     
     @objc func presentVC() {
-        let vc = FirstViewController()
+        let vc = NavigationConfiguratorViewController()
                
         let nav = TKPNavigationController(rootViewController: vc)
         nav.modalPresentationStyle = .fullScreen
+        present(nav, animated: true, completion: nil)
+    }
+    
+    @objc func presentRegularVC() {
+        let vc = FirstViewController()
+               
+        let nav = UINavigationController(rootViewController: vc)
+        nav.modalPresentationStyle = .fullScreen
+        nav.navigationBar.isTranslucent = false
         present(nav, animated: true, completion: nil)
     }
 }
