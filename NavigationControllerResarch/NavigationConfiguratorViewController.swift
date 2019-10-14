@@ -117,7 +117,7 @@ class NavigationConfiguratorViewController: UIViewController {
             tkpNavigationItem.title = configurator.title
             tkpNavigationItem.subtitle = configurator.subtitle
         }
-        //todo
+        
         tkpNavigationItem.hidesBackButton = configurator.hidesBackButton
         tkpNavigationItem.rightBarButtonItems = configurator.barButtons
     }

@@ -120,6 +120,7 @@ public class TKPNavigationItem: NSObject {
     
     private func configureTitleView() {
         navigationItem?.titleView = headerNode.view
+        
     }
 }
 

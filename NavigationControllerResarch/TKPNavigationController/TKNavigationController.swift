@@ -39,8 +39,6 @@ class TKPNavigationController: UINavigationController {
         delegate = self
         
         interactiveTransition.delegate = self
-        
-        
         prepare()
     }
     
@@ -62,6 +60,7 @@ extension TKPNavigationController: UINavigationControllerDelegate  {
             interactiveTransition.bindPanGesture(to: view)
             return pushAnimator
         case .pop, .none:
+            interactiveTransition.transitionContext = popAnimator.transitionContext
             return popAnimator
         @unknown default:
             return nil
@@ -79,7 +78,11 @@ extension TKPNavigationController: TKPNavigationTransitionDelegate {
     }
     
     internal var isInteractionTransitionAllowed: Bool {
-        return viewControllers.count > 0
+        if let hidesBackButton = navigationBar.topItem?.hidesBackButton {
+            return !hidesBackButton
+        }
+        
+        return true
     }
     
     internal var isPopAnimatorAnimating: Bool {

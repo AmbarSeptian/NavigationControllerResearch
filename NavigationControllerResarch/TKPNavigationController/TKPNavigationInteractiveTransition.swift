@@ -26,7 +26,7 @@ internal class TKPNavigationInteractiveTransition: UIPercentDrivenInteractiveTra
         get {
             print("::Name \(max(CGFloat(0.5), 1 - self.percentComplete))")
             return max(0.5, 1 - percentComplete)
-        }
+        }   
         set{
             self.completionSpeed = newValue
         }
@@ -38,6 +38,16 @@ internal class TKPNavigationInteractiveTransition: UIPercentDrivenInteractiveTra
     /// Boolean value that indicates if the panGesture currently is being interacted
     internal var isInteracting: Bool = false
     
+    override var wantsInteractiveStart: Bool {
+        get {
+            return isInteracting
+        }
+        
+        set {
+            isInteracting = newValue
+        }
+    }
+    
     internal func bindPanGesture(to view: UIView) {
         view.addGestureRecognizer(panGesture)
     }
@@ -45,10 +55,6 @@ internal class TKPNavigationInteractiveTransition: UIPercentDrivenInteractiveTra
     @objc private func handleGesture(_ panGesture: UIPanGestureRecognizer) {
         guard let delegate = delegate else {
             assertionFailure("Delegate must not empty")
-            return
-        }
-        
-        guard delegate.isInteractionTransitionAllowed else {
             return
         }
         
@@ -62,9 +68,12 @@ internal class TKPNavigationInteractiveTransition: UIPercentDrivenInteractiveTra
         
         switch panGesture.state {
         case .began:
-            isInteracting = true
-            if isGestureMovingToRight {
-                 delegate.triggerPopViewController()
+            
+            let currentVC = transitionContext?.viewController(forKey: .from)
+            let popBackAllowed = delegate.isInteractionTransitionAllowed
+            if isGestureMovingToRight && popBackAllowed {
+                delegate.triggerPopViewController()
+                isInteracting = true
             }
         case .changed:
             guard isInteracting, let view = panGesture.view else { return }
@@ -93,6 +102,18 @@ internal class TKPNavigationInteractiveTransition: UIPercentDrivenInteractiveTra
         @unknown default:
             break
         }
+    }
+    
+    override func startInteractiveTransition(_ transitionContext: UIViewControllerContextTransitioning) {
+        super.startInteractiveTransition(transitionContext)
+        self.transitionContext = transitionContext
+    }
+    
+    override func cancel() {
+        transitionContext?.cancelInteractiveTransition()
+        transitionContext?.viewController(forKey: .from)?.endAppearanceTransition()
+        transitionContext?.viewController(forKey: .to)?.endAppearanceTransition()
+        super.cancel()
     }
 }
 
