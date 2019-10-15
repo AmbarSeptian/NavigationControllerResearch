@@ -24,7 +24,6 @@ internal class TKPNavigationInteractiveTransition: UIPercentDrivenInteractiveTra
     
     internal override var completionSpeed: CGFloat {
         get {
-            print("::Name \(max(CGFloat(0.5), 1 - self.percentComplete))")
             return max(0.5, 1 - percentComplete)
         }   
         set{
@@ -63,7 +62,6 @@ internal class TKPNavigationInteractiveTransition: UIPercentDrivenInteractiveTra
                 
                 if isGestureMovingToRight {
                     delegate.triggerPopViewController()
-                    print("::Began")
                 }
             }
             
@@ -86,13 +84,10 @@ internal class TKPNavigationInteractiveTransition: UIPercentDrivenInteractiveTra
             guard isInteracting else { return }
             isInteracting = false
             cancel()
-            print("::CancelA")
         case .possible, .failed:
-            print("::Break \(panGesture.state)")
             break
             
         @unknown default:
-            print("::Break \(panGesture.state)")
             break
         }
     }
@@ -113,12 +108,9 @@ extension TKPNavigationInteractiveTransition: UIGestureRecognizerDelegate {
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
         if gestureRecognizer == panGesture, let otherPanGesture = otherGestureRecognizer as? UIPanGestureRecognizer, let scrollView = otherPanGesture.view as? UIScrollView {
             if scrollView.contentOffset.x > 0 {
-                print("::Pager")
                 return false
             }
         }
-//        print("::PanGesture")
         return true
     }
-//    
 }
