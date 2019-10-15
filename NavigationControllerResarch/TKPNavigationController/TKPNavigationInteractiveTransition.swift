@@ -58,7 +58,7 @@ internal class TKPNavigationInteractiveTransition: UIPercentDrivenInteractiveTra
         case .began:
             let popBackAllowed = delegate.isInteractionTransitionAllowed
 //            let position = panGesture.location(in: panGesture.view) //EDIT
-            if !delegate.isPopAnimatorAnimating {
+            if !delegate.isPopAnimatorAnimating && popBackAllowed{
                 isInteracting = true
                 
                 if isGestureMovingToRight {
@@ -72,16 +72,13 @@ internal class TKPNavigationInteractiveTransition: UIPercentDrivenInteractiveTra
             
             let progress = max(0, offset.x / view.bounds.width)
             self.update(progress)
-            print("::Update \(progress) - \(offset.x)")
         case .ended:
             guard isInteracting else { return }
             
             if isGestureMovingToRight {
-                print("::Finish \(percentComplete)")
                 self.finish()
             } else {
                 self.cancel()
-                print("::Cancel \(percentComplete)")
             }
             isInteracting = false
             
@@ -113,34 +110,15 @@ internal class TKPNavigationInteractiveTransition: UIPercentDrivenInteractiveTra
 
 extension TKPNavigationInteractiveTransition: UIGestureRecognizerDelegate {
     
-//    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
-////        if gestureRecognizer == panGesture, let otherPanGesture = otherGestureRecognizer as? UIPanGestureRecognizer, let scrollView = otherPanGesture.view as? UIScrollView {
-////            if scrollView.contentOffset.x > 0 {
-////                print("::Pager")
-////                return false
-////            }
-////        }
-////        print("::PanGesture")
-//        return true
-//    }
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        if gestureRecognizer == panGesture, let otherPanGesture = otherGestureRecognizer as? UIPanGestureRecognizer, let scrollView = otherPanGesture.view as? UIScrollView {
+            if scrollView.contentOffset.x > 0 {
+                print("::Pager")
+                return false
+            }
+        }
+//        print("::PanGesture")
+        return true
+    }
 //    
-//    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
-//        return true
-//    }
-//
-//    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRequireFailureOf otherGestureRecognizer: UIGestureRecognizer) -> Bool {
-//        if let otherPanGesture = otherGestureRecognizer as? UIPanGestureRecognizer, let scrollView = otherPanGesture.view as? UIScrollView {
-//            if scrollView.contentOffset.x > 0 {
-//                return true
-//            }
-//        }
-//        return false
-//    }
-    
-//    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldBeRequiredToFailBy otherGestureRecognizer: UIGestureRecognizer) -> Bool {
-//        if let otherPanGesture = otherGestureRecognizer as? UIPanGestureRecognizer, let scrollView = otherPanGesture.view as? UIScrollView {
-//
-//        }
-//        return true
-//    }
 }
