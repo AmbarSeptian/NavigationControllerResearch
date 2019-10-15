@@ -176,6 +176,7 @@ internal class TKPNavigationHeaderNode: ASDisplayNode {
         subtitleNode.backgroundColor = .red
         subtitleNode.style.flexShrink = 1
         backgroundColor = .gray
+        displaysAsynchronously = false
     }
     
     override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {

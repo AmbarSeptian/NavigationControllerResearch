@@ -21,7 +21,6 @@ class SecondViewController: UIViewController {
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.backgroundColor = .clear
-        
         return collectionView
     }()
     
@@ -29,10 +28,8 @@ class SecondViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-
-//        navigationItem.titleView?.layoutIfNeeded()
-        
-        let barButton = UIBarButtonItem(title: "Push", style: .plain, target: self, action: #selector(self.pushVC))
+//        let barButton = UIBarButtonItem(title: "Push", style: .plain, target: self, action: #selector(self.pushVC))
+        let barButton = UIBarButtonItem(image: UIImage(named: "icon-back"), style: .plain, target: self, action: #selector(self.pushVC))
         navigationItem.rightBarButtonItem = barButton
         
         tkpNavigationItem.backgroundStyle = .transparent
@@ -49,7 +46,6 @@ class SecondViewController: UIViewController {
         view.backgroundColor = .red
         view.frame = CGRect(x: 0, y: 0, width: 20, height: 20)
         self.view.addSubview(view)
-        
     }
     
     
@@ -58,6 +54,9 @@ class SecondViewController: UIViewController {
         collectionView.frame = view.bounds
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+    }
     
     @objc func pushVC() {
         let vc = ThirdViewController()

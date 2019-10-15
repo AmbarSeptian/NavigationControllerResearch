@@ -57,14 +57,12 @@ internal class TKPNavigationPopAnimator: NSObject, UIViewControllerAnimatedTrans
             tkpNavigationBar.backgroundStyle = nextStyle
             
         }) { _ in
-            self.isAnimating = false
+            
             shadowMask.removeFromSuperview()
             
             let completeTransition = !(transitionContext.transitionWasCancelled)
             transitionContext.completeTransition(completeTransition)
-            
-            fromVC.endAppearanceTransition()
-            toVC.endAppearanceTransition()
+            self.isAnimating = false
             print("::isInteractive \(transitionContext.isInteractive)")
         }
         

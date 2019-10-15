@@ -39,6 +39,7 @@ class TKPNavigationController: UINavigationController {
         delegate = self
         
         interactiveTransition.delegate = self
+        interactiveTransition.bindPanGesture(to: view)
         prepare()
     }
     
@@ -57,7 +58,6 @@ extension TKPNavigationController: UINavigationControllerDelegate  {
     func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationController.Operation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         switch operation {
         case .push:
-            interactiveTransition.bindPanGesture(to: view)
             return pushAnimator
         case .pop, .none:
             interactiveTransition.transitionContext = popAnimator.transitionContext
@@ -86,6 +86,7 @@ extension TKPNavigationController: TKPNavigationTransitionDelegate {
     }
     
     internal var isPopAnimatorAnimating: Bool {
+        print("::Animator \(popAnimator.isAnimating)")
         return popAnimator.isAnimating
     }
 }

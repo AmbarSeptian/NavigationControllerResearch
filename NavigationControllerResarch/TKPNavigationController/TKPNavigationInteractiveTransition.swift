@@ -38,16 +38,6 @@ internal class TKPNavigationInteractiveTransition: UIPercentDrivenInteractiveTra
     /// Boolean value that indicates if the panGesture currently is being interacted
     internal var isInteracting: Bool = false
     
-    override var wantsInteractiveStart: Bool {
-        get {
-            return isInteracting
-        }
-        
-        set {
-            isInteracting = newValue
-        }
-    }
-    
     internal func bindPanGesture(to view: UIView) {
         view.addGestureRecognizer(panGesture)
     }
@@ -63,30 +53,33 @@ internal class TKPNavigationInteractiveTransition: UIPercentDrivenInteractiveTra
 
         // we only need handle when panGesture swipe from left to right
         let isGestureMovingToRight = velocity.x > 0
-        print("::Velocity \(velocity)")
-        print("::Translation \(offset)")
         
         switch panGesture.state {
         case .began:
-            
-            let currentVC = transitionContext?.viewController(forKey: .from)
             let popBackAllowed = delegate.isInteractionTransitionAllowed
-            if isGestureMovingToRight && popBackAllowed {
-                delegate.triggerPopViewController()
+//            let position = panGesture.location(in: panGesture.view) //EDIT
+            if !delegate.isPopAnimatorAnimating {
                 isInteracting = true
+                
+                if isGestureMovingToRight {
+                    delegate.triggerPopViewController()
+                    print("::Began")
+                }
             }
+            
         case .changed:
             guard isInteracting, let view = panGesture.view else { return }
             
             let progress = max(0, offset.x / view.bounds.width)
             self.update(progress)
+            print("::Update \(progress) - \(offset.x)")
         case .ended:
             guard isInteracting else { return }
             
             if isGestureMovingToRight {
                 print("::Finish \(percentComplete)")
                 self.finish()
-            } else if offset.x > 0 {
+            } else {
                 self.cancel()
                 print("::Cancel \(percentComplete)")
             }
@@ -96,10 +89,13 @@ internal class TKPNavigationInteractiveTransition: UIPercentDrivenInteractiveTra
             guard isInteracting else { return }
             isInteracting = false
             cancel()
-            print("::ACancel")
+            print("::CancelA")
         case .possible, .failed:
+            print("::Break \(panGesture.state)")
             break
+            
         @unknown default:
+            print("::Break \(panGesture.state)")
             break
         }
     }
@@ -110,21 +106,41 @@ internal class TKPNavigationInteractiveTransition: UIPercentDrivenInteractiveTra
     }
     
     override func cancel() {
-        transitionContext?.cancelInteractiveTransition()
-        transitionContext?.viewController(forKey: .from)?.endAppearanceTransition()
-        transitionContext?.viewController(forKey: .to)?.endAppearanceTransition()
         super.cancel()
     }
+    
 }
 
 extension TKPNavigationInteractiveTransition: UIGestureRecognizerDelegate {
     
-    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
-        if gestureRecognizer == panGesture, let otherPanGesture = otherGestureRecognizer as? UIPanGestureRecognizer, let scrollView = otherPanGesture.view as? UIScrollView {
-            if scrollView.contentOffset.x > 0 {
-                return false
-            }
-        }
-        return true
-    }
+//    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+////        if gestureRecognizer == panGesture, let otherPanGesture = otherGestureRecognizer as? UIPanGestureRecognizer, let scrollView = otherPanGesture.view as? UIScrollView {
+////            if scrollView.contentOffset.x > 0 {
+////                print("::Pager")
+////                return false
+////            }
+////        }
+////        print("::PanGesture")
+//        return true
+//    }
+//    
+//    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+//        return true
+//    }
+//
+//    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRequireFailureOf otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+//        if let otherPanGesture = otherGestureRecognizer as? UIPanGestureRecognizer, let scrollView = otherPanGesture.view as? UIScrollView {
+//            if scrollView.contentOffset.x > 0 {
+//                return true
+//            }
+//        }
+//        return false
+//    }
+    
+//    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldBeRequiredToFailBy otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+//        if let otherPanGesture = otherGestureRecognizer as? UIPanGestureRecognizer, let scrollView = otherPanGesture.view as? UIScrollView {
+//
+//        }
+//        return true
+//    }
 }
