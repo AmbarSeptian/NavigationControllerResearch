@@ -8,44 +8,7 @@
 
 import UIKit
 
-struct NavigatorConfigurator {
-    var backgroundStyle: TKPNavigationItem.BackgroundStyle
-    var title: String?
-    var subtitle: String?
-    var useCustomTitleView: Bool
-    var hidesBackButton: Bool
-    var barButtons: [UIBarButtonItem]
-}
-
 class NavigationConfiguratorViewController: UIViewController {
-    enum Configurator: Int, CaseIterable {
-        case backgroundStyle = 0
-        case title
-        case subtitle
-        case useCustomTitleView
-        case hidesBackButton
-        case addBarButton
-        case pushViewController
-        
-        var title: String {
-            switch self {
-            case .backgroundStyle:
-                return "Set Background Transparent"
-            case .title:
-                return "Change Title"
-            case .subtitle:
-                return "Subtitle"
-            case .useCustomTitleView:
-                return "Use Custom TitleView"
-            case .hidesBackButton:
-                return "Hide Back Button"
-            case .addBarButton:
-                return "Add Right Bar Button"
-            case .pushViewController:
-                return "Push ViewController"
-            }
-        }
-    }
     
     let titleTextField = UITextField()
     let subtitleTextField = UITextField()
@@ -65,19 +28,10 @@ class NavigationConfiguratorViewController: UIViewController {
         return label
     }()
     
-    static let defaultConfigurator: NavigatorConfigurator = {
-        return NavigatorConfigurator(backgroundStyle: .basic,
-                                     title: "Title Goes here",
-                                     subtitle: "Subtitle Goes Here",
-                                     useCustomTitleView: false,
-                                     hidesBackButton: false,
-                                     barButtons: [])
-    }()
-    
     let currentConfigurator: NavigatorConfigurator
     let tableView = UITableView()
     
-    init(currentConfigurator: NavigatorConfigurator = defaultConfigurator) {
+    init(currentConfigurator: NavigatorConfigurator = .defaultValue) {
         self.currentConfigurator = currentConfigurator
         super.init(nibName: nil, bundle: nil)
     }
@@ -97,7 +51,6 @@ class NavigationConfiguratorViewController: UIViewController {
         configureNavigator(configurator: currentConfigurator)
     }
     
-    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         tableView.frame = view.bounds
@@ -105,7 +58,7 @@ class NavigationConfiguratorViewController: UIViewController {
     
     override func motionEnded(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
         guard motion == .motionShake else { return }
-        pushViewController()
+        dismiss(animated: true, completion: nil)
     }
     
     func configureNavigator(configurator: NavigatorConfigurator) {
@@ -119,7 +72,12 @@ class NavigationConfiguratorViewController: UIViewController {
         }
         
         tkpNavigationItem.hidesBackButton = configurator.hidesBackButton
-        tkpNavigationItem.rightBarButtonItems = configurator.barButtons
+        let barButtons = configurator.barButtons
+        barButtons.forEach { [weak self] button in
+            button.target = self
+            button.action = #selector(self?.pushViewController)
+        }
+        tkpNavigationItem.rightBarButtonItems = barButtons
     }
     
     @objc func pushViewController() {
@@ -152,7 +110,7 @@ class NavigationConfiguratorViewController: UIViewController {
 
 extension NavigationConfiguratorViewController: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
-        return Configurator.allCases.count
+        return NavigatorConfiguratorList.allCases.count
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 1
@@ -164,7 +122,7 @@ extension NavigationConfiguratorViewController: UITableViewDataSource {
         cell.selectionStyle = .none
         
         let contentFrame = CGRect(x: 10, y: 10, width: cell.contentView.bounds.width - 20, height: cell.contentView.bounds.height - 20)
-        switch Configurator.allCases[indexPath.section] {
+        switch NavigatorConfiguratorList.allCases[indexPath.section] {
         case .title:
             cell.contentView.addSubview(titleTextField)
             titleTextField.placeholder = "Change Title"
@@ -206,7 +164,7 @@ extension NavigationConfiguratorViewController: UITableViewDataSource {
 
 extension NavigationConfiguratorViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return Configurator.allCases[section].title
+        return NavigatorConfiguratorList.allCases[section].title
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -214,7 +172,7 @@ extension NavigationConfiguratorViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard indexPath.section == Configurator.pushViewController.rawValue else { return }
+        guard indexPath.section == NavigatorConfiguratorList.pushViewController.rawValue else { return }
         pushViewController()
     }
 }

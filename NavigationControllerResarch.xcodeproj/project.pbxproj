@@ -11,15 +11,17 @@
 		E55904C22339D5BA00621148 /* TKPNavigationInteractiveTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = E55904C12339D5BA00621148 /* TKPNavigationInteractiveTransition.swift */; };
 		E55FC8B5232D317100E0C256 /* TKPNavigationItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = E55FC8B4232D317100E0C256 /* TKPNavigationItem.swift */; };
 		E56112342328EB40005DD8C3 /* TKNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56112332328EB40005DD8C3 /* TKNavigationController.swift */; };
-		E567C28F2326355A001DE31B /* NavigationBarColorable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E567C28E2326355A001DE31B /* NavigationBarColorable.swift */; };
 		E56DEFA9232F77EE001AEC7A /* TKPNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56DEFA8232F77EE001AEC7A /* TKPNavigationBar.swift */; };
 		E56DEFAB232F93A2001AEC7A /* PresenterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E56DEFAA232F93A2001AEC7A /* PresenterViewController.swift */; };
+		E57250FC234C9620000DCC89 /* RegularViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57250FB234C9620000DCC89 /* RegularViewController.swift */; };
 		E5827067232C112500D5BE73 /* ThirdViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5827066232C112500D5BE73 /* ThirdViewController.swift */; };
+		E58402822364B8BF008CFD8F /* NavigatonConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E58402812364B8BF008CFD8F /* NavigatonConfigurator.swift */; };
 		E5AA35B82320E776002416E0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5AA35B72320E776002416E0 /* AppDelegate.swift */; };
 		E5AA35BA2320E776002416E0 /* FirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5AA35B92320E776002416E0 /* FirstViewController.swift */; };
 		E5AA35BF2320E778002416E0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E5AA35BE2320E778002416E0 /* Assets.xcassets */; };
 		E5AA35C22320E778002416E0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E5AA35C02320E778002416E0 /* LaunchScreen.storyboard */; };
 		E5AA35CA2320E793002416E0 /* SecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5AA35C92320E793002416E0 /* SecondViewController.swift */; };
+		E5B16770235069D100737B53 /* NavigationConfiguratorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5B1676F235069D100737B53 /* NavigationConfiguratorViewController.swift */; };
 		E5DA11CA2329208B0082BF64 /* TKPNavigationPushAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5DA11C92329208B0082BF64 /* TKPNavigationPushAnimator.swift */; };
 		E5DA11CC232920A30082BF64 /* TKPNavigationPopAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5DA11CB232920A30082BF64 /* TKPNavigationPopAnimator.swift */; };
 /* End PBXBuildFile section */
@@ -31,10 +33,11 @@
 		E55904C12339D5BA00621148 /* TKPNavigationInteractiveTransition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKPNavigationInteractiveTransition.swift; sourceTree = "<group>"; };
 		E55FC8B4232D317100E0C256 /* TKPNavigationItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKPNavigationItem.swift; sourceTree = "<group>"; };
 		E56112332328EB40005DD8C3 /* TKNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKNavigationController.swift; sourceTree = "<group>"; };
-		E567C28E2326355A001DE31B /* NavigationBarColorable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBarColorable.swift; sourceTree = "<group>"; };
 		E56DEFA8232F77EE001AEC7A /* TKPNavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKPNavigationBar.swift; sourceTree = "<group>"; };
 		E56DEFAA232F93A2001AEC7A /* PresenterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresenterViewController.swift; sourceTree = "<group>"; };
+		E57250FB234C9620000DCC89 /* RegularViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegularViewController.swift; sourceTree = "<group>"; };
 		E5827066232C112500D5BE73 /* ThirdViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThirdViewController.swift; sourceTree = "<group>"; };
+		E58402812364B8BF008CFD8F /* NavigatonConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigatonConfigurator.swift; sourceTree = "<group>"; };
 		E5AA35B42320E776002416E0 /* NavigationControllerResarch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NavigationControllerResarch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E5AA35B72320E776002416E0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E5AA35B92320E776002416E0 /* FirstViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstViewController.swift; sourceTree = "<group>"; };
@@ -42,6 +45,7 @@
 		E5AA35C12320E778002416E0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E5AA35C32320E778002416E0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E5AA35C92320E793002416E0 /* SecondViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondViewController.swift; sourceTree = "<group>"; };
+		E5B1676F235069D100737B53 /* NavigationConfiguratorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationConfiguratorViewController.swift; sourceTree = "<group>"; };
 		E5DA11C92329208B0082BF64 /* TKPNavigationPushAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKPNavigationPushAnimator.swift; sourceTree = "<group>"; };
 		E5DA11CB232920A30082BF64 /* TKPNavigationPopAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TKPNavigationPopAnimator.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -101,7 +105,9 @@
 				E5AA35C92320E793002416E0 /* SecondViewController.swift */,
 				E5827066232C112500D5BE73 /* ThirdViewController.swift */,
 				E56DEFAA232F93A2001AEC7A /* PresenterViewController.swift */,
-				E567C28E2326355A001DE31B /* NavigationBarColorable.swift */,
+				E57250FB234C9620000DCC89 /* RegularViewController.swift */,
+				E5B1676F235069D100737B53 /* NavigationConfiguratorViewController.swift */,
+				E58402812364B8BF008CFD8F /* NavigatonConfigurator.swift */,
 				E5DA11C8232920670082BF64 /* TKPNavigationController */,
 				E5AA35BE2320E778002416E0 /* Assets.xcassets */,
 				E5AA35C02320E778002416E0 /* LaunchScreen.storyboard */,
@@ -256,8 +262,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E58402822364B8BF008CFD8F /* NavigatonConfigurator.swift in Sources */,
 				E55904C22339D5BA00621148 /* TKPNavigationInteractiveTransition.swift in Sources */,
 				E56DEFAB232F93A2001AEC7A /* PresenterViewController.swift in Sources */,
+				E57250FC234C9620000DCC89 /* RegularViewController.swift in Sources */,
+				E5B16770235069D100737B53 /* NavigationConfiguratorViewController.swift in Sources */,
 				E5DA11CA2329208B0082BF64 /* TKPNavigationPushAnimator.swift in Sources */,
 				E55FC8B5232D317100E0C256 /* TKPNavigationItem.swift in Sources */,
 				E56112342328EB40005DD8C3 /* TKNavigationController.swift in Sources */,
@@ -267,7 +276,6 @@
 				E5AA35BA2320E776002416E0 /* FirstViewController.swift in Sources */,
 				E5AA35B82320E776002416E0 /* AppDelegate.swift in Sources */,
 				E5827067232C112500D5BE73 /* ThirdViewController.swift in Sources */,
-				E567C28F2326355A001DE31B /* NavigationBarColorable.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
