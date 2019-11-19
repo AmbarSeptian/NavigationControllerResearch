@@ -15,30 +15,38 @@ PODS:
   - PINRemoteImage/PINCache (3.0.0-beta.13):
     - PINCache (= 3.0.1-beta.6)
     - PINRemoteImage/Core
-  - Texture (2.8.1):
-    - Texture/AssetsLibrary (= 2.8.1)
-    - Texture/Core (= 2.8.1)
-    - Texture/MapKit (= 2.8.1)
-    - Texture/Photos (= 2.8.1)
-    - Texture/PINRemoteImage (= 2.8.1)
-    - Texture/Video (= 2.8.1)
-  - Texture/AssetsLibrary (2.8.1):
+  - RxCocoa (5.0.0):
+    - RxRelay (~> 5)
+    - RxSwift (~> 5)
+  - RxRelay (5.0.0):
+    - RxSwift (~> 5)
+  - RxSwift (5.0.0)
+  - Texture (2.8):
+    - Texture/AssetsLibrary (= 2.8)
+    - Texture/Core (= 2.8)
+    - Texture/MapKit (= 2.8)
+    - Texture/Photos (= 2.8)
+    - Texture/PINRemoteImage (= 2.8)
+    - Texture/Video (= 2.8)
+  - Texture/AssetsLibrary (2.8):
     - Texture/Core
-  - Texture/Core (2.8.1)
-  - Texture/MapKit (2.8.1):
+  - Texture/Core (2.8)
+  - Texture/MapKit (2.8):
     - Texture/Core
-  - Texture/Photos (2.8.1):
+  - Texture/Photos (2.8):
     - Texture/Core
-  - Texture/PINRemoteImage (2.8.1):
+  - Texture/PINRemoteImage (2.8):
     - PINRemoteImage/iOS (= 3.0.0-beta.13)
     - PINRemoteImage/PINCache
     - Texture/Core
-  - Texture/Video (2.8.1):
+  - Texture/Video (2.8):
     - Texture/Core
 
 DEPENDENCIES:
   - FLEX (~> 3.0)
-  - Texture
+  - RxCocoa
+  - RxSwift
+  - Texture (= 2.8)
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
@@ -46,6 +54,9 @@ SPEC REPOS:
     - PINCache
     - PINOperation
     - PINRemoteImage
+    - RxCocoa
+    - RxRelay
+    - RxSwift
     - Texture
 
 SPEC CHECKSUMS:
@@ -53,8 +64,11 @@ SPEC CHECKSUMS:
   PINCache: d195fdba255283f7e9900a55e3cced377f431f9b
   PINOperation: 24b774353ca248fcf87d67b2d61eef42087c125a
   PINRemoteImage: d6d51c5d2adda55f1ce30c96e850b6c4ebd2856a
-  Texture: 8ecf6984065a1e54f06bf97b349ecca28582acd7
+  RxCocoa: fcf32050ac00d801f34a7f71d5e8e7f23026dcd8
+  RxRelay: 4f7409406a51a55cd88483f21ed898c234d60f18
+  RxSwift: 8b0671caa829a763bbce7271095859121cbd895f
+  Texture: fc6e0157201f3a6e503d364c147b1872e365cef4
 
-PODFILE CHECKSUM: e09855cb15f97819198a1caabf4314f608bfe9fe
+PODFILE CHECKSUM: 220305af3ccaf5619cf3bc5cd4f5dcbf7fcd73d9
 
 COCOAPODS: 1.7.4

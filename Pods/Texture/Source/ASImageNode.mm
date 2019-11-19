@@ -235,7 +235,7 @@ typedef void (^ASImageNodeDrawParametersBlock)(ASWeakMapEntry *entry);
 
 - (void)_locked_setImage:(UIImage *)image
 {
-  DISABLED_ASAssertLocked(__instanceLock__);
+  ASAssertLocked(__instanceLock__);
   if (ASObjectIsEqual(_image, image)) {
     return;
   }
