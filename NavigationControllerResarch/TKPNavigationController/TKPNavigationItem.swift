@@ -81,7 +81,8 @@ public class TKPNavigationItem: NSObject {
         }
         
         set {
-            navigationItem?.rightBarButtonItems = newValue
+            let newBarButtons = newValue.map({ createNewBarButton($0) })
+            navigationItem?.rightBarButtonItems = newBarButtons
         }
     }
     
@@ -121,6 +122,26 @@ public class TKPNavigationItem: NSObject {
     private func configureTitleView() {
         navigationItem?.titleView = headerNode.view
         
+    }
+    
+    private func createNewBarButton(_ barButton: UIBarButtonItem) -> UIBarButtonItem {
+        /* Fix bug UIBarButton title keeps highlighted after swiped back from previous controller by creating new UIBarButton using `UIButton` as customView
+         Bug report: http://www.openradar.me/35991203
+         
+         Already tried using this approach but doesn't work:
+         https://stackoverflow.com/questions/47754472/ios-uinavigationbar-button-remains-faded-after-segue-back
+        */
+        if let title = barButton.title {
+            let button = UIButton(type: .system)
+            button.setTitle(title, for: .normal)
+            if let target = barButton.target, let action = barButton.action {
+                button.addTarget(target, action: action, for: .touchUpInside)
+            }
+            barButton.customView = button
+            return barButton
+        }
+        
+        return barButton
     }
 }
 
@@ -168,18 +189,19 @@ internal class TKPNavigationHeaderNode: ASDisplayNode {
         }
     }
     
-    override init() {
+    internal override init() {
         super.init()
         automaticallyManagesSubnodes = true
+        
         titleNode.attributedText = NSAttributedString(string: "Header", attributes: [:])
         subtitleNode.attributedText = nil
-        subtitleNode.backgroundColor = .red
         subtitleNode.style.flexShrink = 1
+        
         backgroundColor = .gray
         displaysAsynchronously = false
     }
     
-    override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
+    internal override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
         return ASStackLayoutSpec(direction: .vertical,
                                  spacing: 2,
                                  justifyContent: .center,
@@ -188,7 +210,8 @@ internal class TKPNavigationHeaderNode: ASDisplayNode {
     }
     
     private func transitionLayout() {
-        let isAnimated = isNodeLoaded
-        transitionLayout(withAnimation: false, shouldMeasureAsync: true)
+        DispatchQueue.main.async {
+            self.transitionLayout(withAnimation: false, shouldMeasureAsync: true)
+        }
     }
 }
