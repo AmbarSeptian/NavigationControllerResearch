@@ -45,11 +45,10 @@ class PresenterViewController: UIViewController {
     }
     
     @objc func presentRegularVC() {
-        let vc = RegularViewController()
+        let vc = NavigationConfiguratorViewController()
                
-        let nav = UINavigationController(rootViewController: vc)
+        let nav = TKPNavigationController(rootViewController: vc)
         nav.modalPresentationStyle = .fullScreen
-        nav.navigationBar.isTranslucent = false
         present(nav, animated: true, completion: nil)
     }
 }

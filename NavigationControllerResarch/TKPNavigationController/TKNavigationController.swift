@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TKPNavigationController: UINavigationController {
+public class TKPNavigationController: UINavigationController {
     
     private let pushAnimator = TKPNavigationPushAnimator()
     private let popAnimator = TKPNavigationPopAnimator()
@@ -27,14 +27,15 @@ class TKPNavigationController: UINavigationController {
         setViewControllers([rootViewController], animated: false)
     }
 
-    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-        // We need to override this method, because on iOS 10
-        // before `init(rootViewController: UIViewController)` called this
-        // method will be called and it should be implemented else fatalError will occur
+    public override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+        /* We need to override this method, because on iOS 10
+         before `init(rootViewController: UIViewController)` called this
+         method will be called and it should be implemented else fatalError will occur
+         */
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
     }
     
-    override func viewDidLoad() {
+    public override func viewDidLoad() {
         super.viewDidLoad()
         delegate = self
         
@@ -55,7 +56,7 @@ class TKPNavigationController: UINavigationController {
 
 
 extension TKPNavigationController: UINavigationControllerDelegate  {
-    func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationController.Operation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+    public func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationController.Operation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         switch operation {
         case .push:
             return pushAnimator
@@ -67,8 +68,16 @@ extension TKPNavigationController: UINavigationControllerDelegate  {
         }
     }
     
-    func navigationController(_ navigationController: UINavigationController, interactionControllerFor animationController: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
+    public func navigationController(_ navigationController: UINavigationController, interactionControllerFor animationController: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
         return interactiveTransition.isInteracting ? interactiveTransition : nil
+    }
+    
+    public func navigationController(_ navigationController: UINavigationController, didShow viewController: UIViewController, animated: Bool) {
+      
+    }
+    
+    public func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
+ 
     }
 }
 

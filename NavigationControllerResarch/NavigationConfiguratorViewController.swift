@@ -63,6 +63,8 @@ class NavigationConfiguratorViewController: UIViewController {
     
     func configureNavigator(configurator: NavigatorConfigurator) {
         tkpNavigationItem.backgroundStyle = configurator.backgroundStyle
+        let backgroundColor:UIColor = configurator.backgroundStyle == .transparent ? .lightGray : .white
+        view.backgroundColor = backgroundColor
         
         if configurator.useCustomTitleView {
             
