@@ -27,6 +27,7 @@ class NavigationConfiguratorViewController: UIViewController {
         label.text = "0"
         return label
     }()
+    let hideSeparatorSwitcher = UISwitch()
     
     let currentConfigurator: NavigatorConfigurator
     let tableView = UITableView()
@@ -74,6 +75,8 @@ class NavigationConfiguratorViewController: UIViewController {
         }
         
         tkpNavigationItem.hidesBackButton = configurator.hidesBackButton
+        tkpNavigationItem.isSepatorHidden = configurator.hidesSeparator
+        
         let barButtons = configurator.barButtons
         barButtons.forEach { [weak self] button in
             button.target = self
@@ -88,6 +91,7 @@ class NavigationConfiguratorViewController: UIViewController {
         let subtitle = subtitleTextField.text
         let useCustomTitleView = useCustomTitleViewSwitcher.isOn
         let hidesBackButton = hidesBackButtonSwitcher.isOn
+        let hidesSeparator = hideSeparatorSwitcher.isOn
         let barButtons = (0..<Int(addBarButtonStepper.value)).map { _ -> UIBarButtonItem in
             return UIBarButtonItem(title: "Button", style: .plain, target: nil, action: nil)
         }
@@ -96,7 +100,7 @@ class NavigationConfiguratorViewController: UIViewController {
                                                      title: title,
                                                      subtitle: subtitle,
                                                      useCustomTitleView: useCustomTitleView,
-                                                     hidesBackButton: hidesBackButton,
+                                                     hidesBackButton: hidesBackButton, hidesSeparator: hidesSeparator,
                                                      barButtons: barButtons)
         
         let nextVC = NavigationConfiguratorViewController(currentConfigurator: nextConfigurator)
@@ -124,6 +128,7 @@ extension NavigationConfiguratorViewController: UITableViewDataSource {
         cell.selectionStyle = .none
         
         let contentFrame = CGRect(x: 10, y: 10, width: cell.contentView.bounds.width - 20, height: cell.contentView.bounds.height - 20)
+        
         switch NavigatorConfiguratorList.allCases[indexPath.section] {
         case .title:
             cell.contentView.addSubview(titleTextField)
@@ -139,6 +144,9 @@ extension NavigationConfiguratorViewController: UITableViewDataSource {
         case .hidesBackButton:
             cell.contentView.addSubview(hidesBackButtonSwitcher)
             hidesBackButtonSwitcher.frame = contentFrame
+        case .hidesSeparator:
+            cell.contentView.addSubview(hideSeparatorSwitcher)
+            hideSeparatorSwitcher.frame = contentFrame
         case .useCustomTitleView:
             cell.contentView.addSubview(useCustomTitleViewSwitcher)
             useCustomTitleViewSwitcher.frame = contentFrame

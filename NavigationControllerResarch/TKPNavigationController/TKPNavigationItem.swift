@@ -98,7 +98,7 @@ public class TKPNavigationItem: NSObject {
     
     public var isSepatorHidden: Bool = true {
         didSet {
-            //TODO
+            delegate?.didToggleHideSeparator(isSepatorHidden)
         }
     }
     

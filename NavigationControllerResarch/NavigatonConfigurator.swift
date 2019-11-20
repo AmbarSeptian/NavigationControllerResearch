@@ -14,6 +14,7 @@ struct NavigatorConfigurator {
     var subtitle: String?
     var useCustomTitleView: Bool
     var hidesBackButton: Bool
+    var hidesSeparator: Bool
     var barButtons: [UIBarButtonItem]
     
     static let defaultValue: NavigatorConfigurator = {
@@ -22,6 +23,7 @@ struct NavigatorConfigurator {
                                        subtitle: "Subtitle Goes Here",
                                        useCustomTitleView: false,
                                        hidesBackButton: false,
+                                       hidesSeparator: false,
                                        barButtons: [UIBarButtonItem(title: "Button",
                                                                     style: .plain,
                                                                     target: nil,
@@ -35,6 +37,7 @@ enum NavigatorConfiguratorList: Int, CaseIterable {
     case subtitle
     case useCustomTitleView
     case hidesBackButton
+    case hidesSeparator
     case addBarButton
     case pushViewController
     
@@ -50,6 +53,8 @@ enum NavigatorConfiguratorList: Int, CaseIterable {
             return "Use Custom TitleView"
         case .hidesBackButton:
             return "Hide Back Button"
+        case .hidesSeparator:
+            return "Hide Separator"
         case .addBarButton:
             return "Add Right Bar Button"
         case .pushViewController:
