@@ -22,8 +22,8 @@ public class TKPNavigationBar: UINavigationBar {
     
     // The view that we used for replacement `shadowImage` of navigationBar
     // Because `shadowImage` property of navigationBar doesn't work properly if you want toggle show or hide with `isTranslucent` property value is `true`.
-    // We can use `navigationView.layer.shadow(s)` property to achive this, but it will show glitch whenever navigation push or popped because we to animate layer we need `Core Animation`
-    // So we use regular UIView then if we need animate it, we just animate the `alpha` use `UIView.animateWithDuration`
+    // We can use `navigationView.layer.shadow(s)` property to achive this, but it will show glitch whenever navigation push or popped because animate layer we need `Core Animation`
+    // So we use regular UIView then if we need animate it, then just animate the `alpha` use `UIView.animateWithDuration`
     private let shadowView: UIView = {
         let view = UIView()
         view.isUserInteractionEnabled = false
@@ -44,7 +44,7 @@ public class TKPNavigationBar: UINavigationBar {
     public override var items: [UINavigationItem]? {
         didSet {
             items?.forEach({ item in
-                self.setupNavigationItemListener(item.tkpNavigationItem)
+                item.tkpNavigationItem.delegate = self
             })
         }
     }
@@ -101,12 +101,6 @@ public class TKPNavigationBar: UINavigationBar {
         backIndicatorTransitionMaskImage = backButtonImage
     }
     
-    private func setupNavigationItemListener(_ item: TKPNavigationItem) {
-        item.didBackgroundStyleChanged =  { [weak self] newStyle in
-            self?.backgroundStyle = newStyle
-        }
-    }
-    
     private func changeBackgroundColor(with backgroundStyle: TKPNavigationItem.BackgroundStyle) {
         // if the backgroundStyle is transparent, we need to set `shadowOpacity` to `zero`
         let shadowOpacity: CGFloat = backgroundStyle == .transparent ? 0 : 1
@@ -131,4 +125,16 @@ public class TKPNavigationBar: UINavigationBar {
         updateNavigationItemLayout(item)
         super.pushItem(item, animated: true)
     }
+}
+
+extension TKPNavigationBar: TKPNavigationItemDelegate {
+    func didBackgroundStyleChanged(_ backgroundStyle: TKPNavigationItem.BackgroundStyle) {
+        changeBackgroundColor(with: backgroundStyle)
+    }
+    
+    func didToggleHideSeparator(_ isHidden: Bool) {
+        // todo
+    }
+    
+    
 }
