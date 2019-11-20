@@ -10,7 +10,7 @@ import UIKit
 
 public class TKPNavigationBar: UINavigationBar {
     // The view that we used for replacement background view of navigationBar
-    // We can use native background navigationBar and use `setBackgroundImage` for backgroundColor but we need to achive smooth transition when navigation pushed or popped so the customView is better approach
+    // We can use native background navigationBar and use `setBackgroundImage` for backgroundColor but we need to achive smooth transition when navigation pushed or popped so use a customView is better approach
     // Another approach is use private api `valueForKey(_backgroundView)` to get `UIView` from navigationBar but it's hacky way and unsafe
     private let navigationView: UIView = {
         let view = UIView()
@@ -38,6 +38,12 @@ public class TKPNavigationBar: UINavigationBar {
     internal var backgroundStyle: TKPNavigationItem.BackgroundStyle = .basic {
         didSet {
             changeBackgroundColor(with: backgroundStyle)
+        }
+    }
+    
+    internal var isSeparatorHidden: Bool = false {
+        didSet {
+            toggleHideSeparator(isSeparatorHidden)
         }
     }
     
@@ -102,11 +108,21 @@ public class TKPNavigationBar: UINavigationBar {
     }
     
     private func changeBackgroundColor(with backgroundStyle: TKPNavigationItem.BackgroundStyle) {
-        // if the backgroundStyle is transparent, we need to set `shadowOpacity` to `zero`
-        let shadowOpacity: CGFloat = backgroundStyle == .transparent ? 0 : 1
-        
         navigationView.backgroundColor = backgroundStyle.color
-        shadowView.alpha = shadowOpacity
+        toggleHideSeparator(isSeparatorHidden)
+    }
+    
+    private func toggleHideSeparator(_ isHidden: Bool) {
+        switch backgroundStyle {
+        case .transparent:
+            // We only need to hide / show the separator if backgroundStyle is not transparent
+            // Ignore `isHidden` value
+            shadowView.alpha = 0
+        case .basic:
+            // if the backgroundStyle is transparent, we need to set `shadowOpacity` to `zero`
+            let shadowOpacity: CGFloat = isHidden ? 0 : 1
+            shadowView.alpha = shadowOpacity
+        }
     }
     
     private func updateNavigationItemLayout(_ item: UINavigationItem) {
@@ -128,13 +144,11 @@ public class TKPNavigationBar: UINavigationBar {
 }
 
 extension TKPNavigationBar: TKPNavigationItemDelegate {
-    func didBackgroundStyleChanged(_ backgroundStyle: TKPNavigationItem.BackgroundStyle) {
-        changeBackgroundColor(with: backgroundStyle)
+    public func didBackgroundStyleChanged(_ backgroundStyle: TKPNavigationItem.BackgroundStyle) {
+        self.backgroundStyle = backgroundStyle
     }
     
-    func didToggleHideSeparator(_ isHidden: Bool) {
-        // todo
+    public func didToggleHideSeparator(_ isHidden: Bool) {
+        self.toggleHideSeparator(isHidden)
     }
-    
-    
 }
