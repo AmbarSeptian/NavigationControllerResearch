@@ -61,7 +61,6 @@ extension TKPNavigationController: UINavigationControllerDelegate  {
         case .push:
             return pushAnimator
         case .pop, .none:
-            interactiveTransition.transitionContext = popAnimator.transitionContext
             return popAnimator
         @unknown default:
             return nil

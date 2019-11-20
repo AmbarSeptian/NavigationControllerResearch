@@ -10,7 +10,6 @@ import UIKit
 
 internal class TKPNavigationPopAnimator: NSObject, UIViewControllerAnimatedTransitioning {
     internal var isAnimating: Bool = false
-    var transitionContext: UIViewControllerContextTransitioning?
     
     internal func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
         return 0.35
@@ -31,7 +30,7 @@ internal class TKPNavigationPopAnimator: NSObject, UIViewControllerAnimatedTrans
                   assertionFailure("Next Controller Navbar should be TKPNavigationBar")
                   return
               }
-        self.transitionContext = transitionContext
+        
         let nextStyle = toVC.tkpNavigationItem.backgroundStyle
     
         let containerView = transitionContext.containerView
