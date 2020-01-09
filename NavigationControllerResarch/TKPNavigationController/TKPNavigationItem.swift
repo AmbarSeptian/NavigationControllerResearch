@@ -7,10 +7,13 @@
 //
 
 import AsyncDisplayKit
+import RxCocoa
+import RxSwift
 
 internal protocol TKPNavigationItemDelegate: AnyObject {
     func didBackgroundStyleChanged(_ backgroundStyle: TKPNavigationItem.BackgroundStyle)
     func didToggleHideSeparator(_ isHidden: Bool)
+    func didScroll(yOffset: CGFloat)
 }
 
 public class TKPNavigationItem: NSObject {
@@ -23,10 +26,13 @@ public class TKPNavigationItem: NSObject {
     public enum BackgroundStyle {
         case basic
         case transparent
+        case automatic
         
         internal var color: UIColor {
             switch self {
             case .basic:
+                return #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+            case .automatic:
                 return #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
             case .transparent:
                 return .clear
@@ -102,6 +108,15 @@ public class TKPNavigationItem: NSObject {
         }
     }
     
+    public weak var scrollView: UIScrollView? {
+        didSet {
+            guard let scrollView = scrollView else { return }
+            setupScrollListener(scrollView)
+        }
+    }
+    
+    private let disposeBag = DisposeBag()
+    
     internal weak var delegate: TKPNavigationItemDelegate?
     
     internal init(_ navigationItem: UINavigationItem?) {
@@ -110,7 +125,6 @@ public class TKPNavigationItem: NSObject {
         super.init()
         self.commonInit()
     }
-    
     
     private func setDefaultHeaderViewIfNeeded() {
         guard navigationItem?.titleView != headerNode.view else { return }
@@ -133,6 +147,28 @@ public class TKPNavigationItem: NSObject {
     
     private func configureTitleView() {
         navigationItem?.titleView = headerNode.view
+    }
+    
+    private func setupScrollListener(_ scrollView: UIScrollView) {
+        scrollView.rx.observeWeakly(CGPoint.self, "contentOffset")
+            .filter { [weak self] _ -> Bool in
+//                return self?.backgroundStyle == .automatic
+                return true
+            }
+            .asDriver(onErrorDriveWith: .empty())
+            .map({ $0?.y ?? .zero}) // TODO: filterNIl()
+            .drive(onNext: { [weak self] yOffset in
+                self?.adjustNavigationOnScroll(by: yOffset)
+            }).disposed(by: disposeBag) // TODO: rx_disposeBag
+    }
+    
+    private func adjustNavigationOnScroll(by yOffset: CGFloat) {
+        if yOffset > 44 {
+            print("::PUTIH")
+        } else {
+            print("::TRANSPARENT")
+        }// TODO
+        delegate?.didScroll(yOffset: yOffset)
     }
     
     private func createNewBarButton(_ barButton: UIBarButtonItem) -> UIBarButtonItem {

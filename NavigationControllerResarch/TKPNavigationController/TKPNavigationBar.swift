@@ -131,6 +131,9 @@ public class TKPNavigationBar: UINavigationBar {
             // if the backgroundStyle is transparent, we need to set `shadowOpacity` to `zero`
             let shadowOpacity: CGFloat = isHidden ? 0 : 1
             shadowView.alpha = shadowOpacity
+        case .automatic:
+            let shadowOpacity: CGFloat = isHidden ? 0 : 1
+            shadowView.alpha = shadowOpacity
         }
     }
     
@@ -151,5 +154,13 @@ extension TKPNavigationBar: TKPNavigationItemDelegate {
     
     public func didToggleHideSeparator(_ isHidden: Bool) {
         isSeparatorHidden = isHidden
+    }
+    
+    public func didScroll(yOffset: CGFloat) {
+        let navBarHeight = bounds.height
+        let alpha = min(yOffset / navBarHeight, 1)
+        
+        let basicColor = TKPNavigationItem.BackgroundStyle.basic.color
+        navigationView.backgroundColor = basicColor.withAlphaComponent(alpha)
     }
 }

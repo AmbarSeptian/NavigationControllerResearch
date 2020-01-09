@@ -47,9 +47,17 @@ class NavigationConfiguratorViewController: UIViewController {
         tableView.dataSource = self
         tableView.delegate = self
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
+        tableView.backgroundColor = .clear
         
         view.addSubview(tableView)
         configureNavigator(configurator: currentConfigurator)
+        
+        tkpNavigationItem.scrollView = tableView
+        
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.colors = [#colorLiteral(red: 0.4745098054, green: 0.8392156959, blue: 0.9764705896, alpha: 1),#colorLiteral(red: 0.1411764771, green: 0.3960784376, blue: 0.5647059083, alpha: 1)].map({ $0.cgColor })
+        gradientLayer.frame = UIScreen.main.bounds
+        view.layer.insertSublayer(gradientLayer, at: 0)
     }
     
     override func viewDidLayoutSubviews() {
@@ -184,5 +192,22 @@ extension NavigationConfiguratorViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard indexPath.section == NavigatorConfiguratorList.pushViewController.rawValue else { return }
         pushViewController()
+    }
+    
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        guard section == NavigatorConfiguratorList.allCases.count - 1 else {
+            return nil
+        }
+        let view = UIView()
+        view.backgroundColor = .white
+        view.frame = CGRect(x: 0, y: 0, width: tableView.bounds.width, height: view.bounds.height)
+        return view
+    }
+    
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        guard section == NavigatorConfiguratorList.allCases.count - 1 else {
+            return 0
+        }
+        return view.bounds.height
     }
 }
