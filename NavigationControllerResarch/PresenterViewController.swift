@@ -37,9 +37,9 @@ class PresenterViewController: UIViewController {
     }
     
     @objc func presentVC() {
-        let vc = FirstViewController()
+        let vc = StandAloneViewController()
                
-        let nav = TKPNavigationController(rootViewController: vc)
+        let nav = UINavigationController(rootViewController: vc)
         nav.modalPresentationStyle = .fullScreen
         present(nav, animated: true, completion: nil)
     }

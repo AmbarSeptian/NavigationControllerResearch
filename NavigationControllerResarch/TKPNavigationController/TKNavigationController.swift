@@ -52,6 +52,12 @@ public class TKPNavigationController: UINavigationController {
         guard let initialBackgroundStyle = topViewController?.tkpNavigationItem.backgroundStyle else { return }
         tkpNavigationBar.backgroundStyle = initialBackgroundStyle
     }
+    
+    public override func pushViewController(_ viewController: UIViewController, animated: Bool) {
+        
+        viewController.navigationItem.tkpNavigationItem.delegate = tkpNavigationBar
+        super.pushViewController(viewController, animated: animated)
+    }
 }
 
 
@@ -79,6 +85,7 @@ extension TKPNavigationController: UINavigationControllerDelegate  {
  
     }
 }
+
 
 extension TKPNavigationController: TKPNavigationTransitionDelegate {
     internal func triggerPopViewController() {

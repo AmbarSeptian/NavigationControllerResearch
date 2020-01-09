@@ -60,6 +60,10 @@ public class TKPNavigationBar: UINavigationBar {
         commonInit()
     }
     
+    public required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     public override func layoutSubviews() {
         super.layoutSubviews()
         
@@ -79,6 +83,11 @@ public class TKPNavigationBar: UINavigationBar {
         
         guard let topItem = topItem else { return }
         updateNavigationItemLayout(topItem)
+    }
+    
+    public override func pushItem(_ item: UINavigationItem, animated: Bool) {
+        updateNavigationItemLayout(item)
+        super.pushItem(item, animated: true)
     }
     
     
@@ -133,14 +142,6 @@ public class TKPNavigationBar: UINavigationBar {
                                  height: bounds.height)
     }
     
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    public override func pushItem(_ item: UINavigationItem, animated: Bool) {
-        updateNavigationItemLayout(item)
-        super.pushItem(item, animated: true)
-    }
 }
 
 extension TKPNavigationBar: TKPNavigationItemDelegate {
@@ -149,6 +150,6 @@ extension TKPNavigationBar: TKPNavigationItemDelegate {
     }
     
     public func didToggleHideSeparator(_ isHidden: Bool) {
-        self.toggleHideSeparator(isHidden)
+        isSeparatorHidden = isHidden
     }
 }
